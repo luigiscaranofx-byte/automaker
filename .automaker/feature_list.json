@@ -1,100 +1,42 @@
 [
   {
-    "id": "feature-1765260864296-98yunv0vj",
-    "category": "Kanban",
-    "description": "Remove drag icon from cards when in in progress or verified.  also add a timer that tracks how long it has been since the agent started, a count up timer basically formatted 00:00",
-    "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765262225700-q2rkue6l8",
-    "category": "Context",
-    "description": "Add Context File should show a file name and a textarea for the context info, that text area should allow drag n drop for txt files and .md files which the system will parse and put into the text area",
-    "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765262348401-hivjg6vuq",
-    "category": "Kanban",
-    "description": "Make in progress column  double width so that the cards display 2 columns masonry layout",
-    "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765262430461-vennhg2b5",
+    "id": "feature-1765286925345-4eu5miocn",
     "category": "Core",
-    "description": "When the electron ui refreshes, it often redirects me back to the overview, remeber my last route and restore on app load",
+    "description": "After a category has been created we should persist that somewhere such as in the .automaker directory in a .json file so that all the categories of future items I add in will persist even if I delete all the cards.",
     "steps": [],
-    "status": "verified"
+    "status": "in_progress",
+    "startedAt": "2025-12-09T13:30:14.509Z"
   },
   {
-    "id": "feature-1765263521367-vse4n57j8",
-    "category": "Spec Editor",
-    "description": "The spec editor no longer shows the content of the file, check the path if correct and using the .automaker directory",
-    "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765263773317-k2cmvg9qh",
+    "id": "feature-1765287004835-d2c5aqdkr",
     "category": "Core",
-    "description": "When opening a new project, verify the .automaker directory is created with necessary files and kick off an agent to analyze the project, refactor the app_spec to describe the project and it's tech stack, and any features currently implemented, also define a blank feature_list.json, create necessary context and agents-context directories, and coding_prompt.md.",
+    "description": "I need to add the ability on the Kanban cards to enable or disable if it's going to do the whole test driven development approach. Sometimes the task is so easy I don't need it to write tests for, but... And if it is a task that did not have a test, a user should manually be able to click a verified button when it's in the in progress column and the agent is done. I'll have to manually verify it.  So this might change the logic a little bit to allow dragging of cards when they aren't tested automatically from the in progress column back to verified and from verified back to in progress. But keep the existing functionality if it is a test automated card and prevent the dragging.",
     "steps": [],
-    "status": "verified"
+    "status": "in_progress",
+    "startedAt": "2025-12-09T13:30:17.323Z"
   },
   {
-    "id": "feature-1765263831805-mr6mduv8p",
-    "category": "Core",
-    "description": "remove claude-progress from anywhere in code or prompts as it's no longer needed",
-    "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765264341539-km1238av9",
-    "category": "Core",
-    "description": "remove the code view link",
-    "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765264472003-ikdarjmlw",
-    "category": "Core",
-    "description": "Add shortcuts keys to all left navigation links, then add shortcuts to the add buttons on the routes (such as kanbam add feature). mske sure they don't mess with normal input or textarea typing or typeaheads. display the shortkey in link or button for users to know (K)",
-    "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765264941688-omfcpy7no",
+    "id": "feature-1765287091626-ceoj6xld8",
     "category": "Kanban",
-    "description": "For the first 10 in progress cards, add shortcut keys 1 through 0 on the keyboard for opening their output modal",
+    "description": "Show a confirmed dialog when I click on the trash icon for deleting a card. Use the existing dialog that we have in the components directory for this.",
     "steps": [],
-    "status": "verified"
+    "status": "in_progress",
+    "startedAt": "2025-12-09T13:32:24.947Z"
   },
   {
-    "id": "feature-1765265001317-4eyqyif9z",
+    "id": "feature-1765287114711-fgypwhnvt",
     "category": "Kanban",
-    "description": "Add a delete all button in the verified column header which runs through all verified cards and deletes them with the exact same delete actions. remember to show a confirm delete confirmation dialog before actually deleting.",
+    "description": "When adding a new feature inside the modal there's an add feature button. Can you add a shortcut of shift? Enter which if you click shift enter I'll automatically add it in",
     "steps": [],
-    "status": "verified"
+    "status": "in_progress",
+    "startedAt": "2025-12-09T13:32:25.263Z"
   },
   {
-    "id": "feature-1765265036114-9oong1mrv",
+    "id": "feature-1765287141131-dz489etgj",
     "category": "Kanban",
-    "description": "Remove the refresh button from the headers, we should need to ever manually refresh anything if our app is well designed",
+    "description": "When I edit a card, it's showing an input for the description refactor to also show a text area for description like we do on the add card, add feature card.",
     "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765265099914-71eq4x4yl",
-    "category": "Core",
-    "description": "Add a ` shortcut to toggle the left side panel (on hover of the toggle show a tool tip with the shortcut info)",
-    "steps": [],
-    "status": "verified"
-  },
-  {
-    "id": "feature-1765265179876-5zcrlncdf",
-    "category": "Kanban",
-    "description": "Add a button in the backlog header which will just take the top cards and put them into the in progress board (up to the limit of the concurrency of course) so that a user doesn't have to drag each on individually, figure out the best name for it. give it a shortcut as well",
-    "steps": [],
-    "status": "verified"
+    "status": "in_progress",
+    "startedAt": "2025-12-09T13:32:25.469Z"
   }
 ]

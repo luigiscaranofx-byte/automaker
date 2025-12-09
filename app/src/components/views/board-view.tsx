@@ -43,9 +43,10 @@ import { KanbanColumn } from "./kanban-column";
 import { KanbanCard } from "./kanban-card";
 import { AutoModeLog } from "./auto-mode-log";
 import { AgentOutputModal } from "./agent-output-modal";
-import { Plus, RefreshCw, Play, StopCircle, Loader2, ChevronUp, ChevronDown, Users, Trash2, FastForward } from "lucide-react";
+import { Plus, RefreshCw, Play, StopCircle, Loader2, ChevronUp, ChevronDown, Users, Trash2, FastForward, FlaskConical, CheckCircle2 } from "lucide-react";
 import { toast } from "sonner";
 import { Slider } from "@/components/ui/slider";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useAutoMode } from "@/hooks/use-auto-mode";
 import {
   useKeyboardShortcuts,
@@ -82,6 +83,7 @@ export function BoardView() {
     description: "",
     steps: [""],
     images: [] as FeatureImage[],
+    skipTests: false,
   });
   const [isLoading, setIsLoading] = useState(true);
   const [isMounted, setIsMounted] = useState(false);
@@ -90,6 +92,7 @@ export function BoardView() {
   const [outputFeature, setOutputFeature] = useState<Feature | null>(null);
   const [featuresWithContext, setFeaturesWithContext] = useState<Set<string>>(new Set());
   const [showDeleteAllVerifiedDialog, setShowDeleteAllVerifiedDialog] = useState(false);
+  const [persistedCategories, setPersistedCategories] = useState<string[]>([]);
 
   // Make current project available globally for modal
   useEffect(() => {
@@ -164,11 +167,13 @@ export function BoardView() {
     })
   );
 
-  // Get unique categories from existing features for autocomplete suggestions
+  // Get unique categories from existing features AND persisted categories for autocomplete suggestions
   const categorySuggestions = useMemo(() => {
-    const categories = features.map((f) => f.category).filter(Boolean);
-    return [...new Set(categories)].sort();
-  }, [features]);
+    const featureCategories = features.map((f) => f.category).filter(Boolean);
+    // Merge feature categories with persisted categories
+    const allCategories = [...featureCategories, ...persistedCategories];
+    return [...new Set(allCategories)].sort();
+  }, [features, persistedCategories]);
 
   // Custom collision detection that prioritizes columns over cards
   const collisionDetectionStrategy = useCallback((args: any) => {
@@ -217,6 +222,57 @@ export function BoardView() {
     }
   }, [currentProject, setFeatures]);
 
+  // Load persisted categories from file
+  const loadCategories = useCallback(async () => {
+    if (!currentProject) return;
+
+    try {
+      const api = getElectronAPI();
+      const result = await api.readFile(
+        `${currentProject.path}/.automaker/categories.json`
+      );
+
+      if (result.success && result.content) {
+        const parsed = JSON.parse(result.content);
+        if (Array.isArray(parsed)) {
+          setPersistedCategories(parsed);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to load categories:", error);
+      // If file doesn't exist, that's fine - start with empty array
+    }
+  }, [currentProject]);
+
+  // Save a new category to the persisted categories file
+  const saveCategory = useCallback(async (category: string) => {
+    if (!currentProject || !category.trim()) return;
+
+    try {
+      const api = getElectronAPI();
+
+      // Read existing categories
+      let categories: string[] = [...persistedCategories];
+
+      // Add new category if it doesn't exist
+      if (!categories.includes(category)) {
+        categories.push(category);
+        categories.sort(); // Keep sorted
+
+        // Write back to file
+        await api.writeFile(
+          `${currentProject.path}/.automaker/categories.json`,
+          JSON.stringify(categories, null, 2)
+        );
+
+        // Update state
+        setPersistedCategories(categories);
+      }
+    } catch (error) {
+      console.error("Failed to save category:", error);
+    }
+  }, [currentProject, persistedCategories]);
+
   // Auto-show activity log when auto mode starts
   useEffect(() => {
     if (autoMode.isRunning && !showActivityLog) {
@@ -243,6 +299,11 @@ export function BoardView() {
   useEffect(() => {
     loadFeatures();
   }, [loadFeatures]);
+
+  // Load persisted categories on mount
+  useEffect(() => {
+    loadCategories();
+  }, [loadCategories]);
 
   // Sync running tasks from electron backend on mount
   useEffect(() => {
@@ -392,14 +453,18 @@ export function BoardView() {
   };
 
   const handleAddFeature = () => {
+    const category = newFeature.category || "Uncategorized";
     addFeature({
-      category: newFeature.category || "Uncategorized",
+      category,
       description: newFeature.description,
       steps: newFeature.steps.filter((s) => s.trim()),
       status: "backlog",
       images: newFeature.images,
+      skipTests: newFeature.skipTests,
     });
-    setNewFeature({ category: "", description: "", steps: [""], images: [] });
+    // Persist the category
+    saveCategory(category);
+    setNewFeature({ category: "", description: "", steps: [""], images: [], skipTests: false });
     setShowAddDialog(false);
   };
 
@@ -410,7 +475,12 @@ export function BoardView() {
       category: editingFeature.category,
       description: editingFeature.description,
       steps: editingFeature.steps,
+      skipTests: editingFeature.skipTests,
     });
+    // Persist the category if it's new
+    if (editingFeature.category) {
+      saveCategory(editingFeature.category);
+    }
     setEditingFeature(null);
   };
 
@@ -421,29 +491,23 @@ export function BoardView() {
     // Check if the feature is currently running
     const isRunning = runningAutoTasks.includes(featureId);
 
-    const confirmMessage = isRunning
-      ? "This feature has an agent running. Deleting it will stop the agent. Are you sure you want to delete this feature?"
-      : "Are you sure you want to delete this feature?";
-
-    if (window.confirm(confirmMessage)) {
-      // If the feature is running, stop the agent first
-      if (isRunning) {
-        try {
-          await autoMode.stopFeature(featureId);
-          toast.success("Agent stopped", {
-            description: `Stopped and deleted: ${feature.description.slice(0, 50)}${feature.description.length > 50 ? "..." : ""}`,
-          });
-        } catch (error) {
-          console.error("[Board] Error stopping feature before delete:", error);
-          toast.error("Failed to stop agent", {
-            description: "The feature will still be deleted.",
-          });
-        }
+    // If the feature is running, stop the agent first
+    if (isRunning) {
+      try {
+        await autoMode.stopFeature(featureId);
+        toast.success("Agent stopped", {
+          description: `Stopped and deleted: ${feature.description.slice(0, 50)}${feature.description.length > 50 ? "..." : ""}`,
+        });
+      } catch (error) {
+        console.error("[Board] Error stopping feature before delete:", error);
+        toast.error("Failed to stop agent", {
+          description: "The feature will still be deleted.",
+        });
       }
-
-      // Remove the feature
-      removeFeature(featureId);
     }
+
+    // Remove the feature immediately without confirmation
+    removeFeature(featureId);
   };
 
   const handleRunFeature = async (feature: Feature) => {
@@ -540,6 +604,24 @@ export function BoardView() {
       console.error("[Board] Error resuming feature:", error);
       await loadFeatures();
     }
+  };
+
+  // Manual verification handler for skipTests features
+  const handleManualVerify = (feature: Feature) => {
+    console.log("[Board] Manually verifying feature:", { id: feature.id, description: feature.description });
+    moveFeature(feature.id, "verified");
+    toast.success("Feature verified", {
+      description: `Marked as verified: ${feature.description.slice(0, 50)}${feature.description.length > 50 ? "..." : ""}`,
+    });
+  };
+
+  // Move feature back to in_progress from verified (for skipTests features)
+  const handleMoveBackToInProgress = (feature: Feature) => {
+    console.log("[Board] Moving feature back to in_progress:", { id: feature.id, description: feature.description });
+    updateFeature(feature.id, { status: "in_progress", startedAt: new Date().toISOString() });
+    toast.info("Feature moved back", {
+      description: `Moved back to In Progress: ${feature.description.slice(0, 50)}${feature.description.length > 50 ? "..." : ""}`,
+    });
   };
 
   const checkContextExists = async (featureId: string): Promise<boolean> => {
@@ -828,6 +910,8 @@ export function BoardView() {
                           onVerify={() => handleVerifyFeature(feature)}
                           onResume={() => handleResumeFeature(feature)}
                           onForceStop={() => handleForceStopFeature(feature)}
+                          onManualVerify={() => handleManualVerify(feature)}
+                          onMoveBackToInProgress={() => handleMoveBackToInProgress(feature)}
                           hasContext={featuresWithContext.has(feature.id)}
                           isCurrentAutoTask={runningAutoTasks.includes(feature.id)}
                           shortcutKey={shortcutKey}
@@ -867,7 +951,15 @@ export function BoardView() {
 
       {/* Add Feature Dialog */}
       <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
-        <DialogContent data-testid="add-feature-dialog">
+        <DialogContent
+          data-testid="add-feature-dialog"
+          onKeyDown={(e) => {
+            if (e.shiftKey && e.key === "Enter" && newFeature.description) {
+              e.preventDefault();
+              handleAddFeature();
+            }
+          }}
+        >
           <DialogHeader>
             <DialogTitle>Add New Feature</DialogTitle>
             <DialogDescription>
@@ -929,6 +1021,25 @@ export function BoardView() {
                 Add Step
               </Button>
             </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="skip-tests"
+                checked={newFeature.skipTests}
+                onCheckedChange={(checked) =>
+                  setNewFeature({ ...newFeature, skipTests: checked === true })
+                }
+                data-testid="skip-tests-checkbox"
+              />
+              <div className="flex items-center gap-2">
+                <Label htmlFor="skip-tests" className="text-sm cursor-pointer">
+                  Skip automated testing
+                </Label>
+                <FlaskConical className="w-3.5 h-3.5 text-muted-foreground" />
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              When enabled, this feature will require manual verification instead of automated TDD.
+            </p>
           </div>
           <DialogFooter>
             <Button variant="ghost" onClick={() => setShowAddDialog(false)}>
@@ -940,6 +1051,12 @@ export function BoardView() {
               data-testid="confirm-add-feature"
             >
               Add Feature
+              <span
+                className="ml-2 px-1.5 py-0.5 text-[10px] font-mono rounded bg-white/10 border border-white/20"
+                data-testid="shortcut-confirm-add-feature"
+              >
+                ⇧↵
+              </span>
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -974,8 +1091,9 @@ export function BoardView() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="edit-description">Description</Label>
-                <Input
+                <Textarea
                   id="edit-description"
+                  placeholder="Describe the feature..."
                   value={editingFeature.description}
                   onChange={(e) =>
                     setEditingFeature({

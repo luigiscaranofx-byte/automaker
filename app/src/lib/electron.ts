@@ -152,6 +152,10 @@ export const getElectronAPI = (): ElectronAPI => {
       if (filePath.endsWith("feature_list.json")) {
         return { success: true, content: JSON.stringify(mockFeatures, null, 2) };
       }
+      if (filePath.endsWith("categories.json")) {
+        // Return empty array for categories when file doesn't exist yet
+        return { success: true, content: "[]" };
+      }
       if (filePath.endsWith("app_spec.txt")) {
         return {
           success: true,
