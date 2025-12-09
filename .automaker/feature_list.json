@@ -4,7 +4,7 @@
     "category": "Kanban",
     "description": "Remove drag icon from cards when in in progress or verified.  also add a timer that tracks how long it has been since the agent started, a count up timer basically formatted 00:00",
     "steps": [],
-    "status": "in_progress"
+    "status": "verified"
   },
   {
     "id": "feature-1765261027396-b78maajg7",
@@ -32,7 +32,7 @@
     "category": "Core",
     "description": "When the electron ui refreshes, it often redirects me back to the overview, remeber my last route and restore on app load",
     "steps": [],
-    "status": "in_progress"
+    "status": "verified"
   },
   {
     "id": "feature-1765263521367-vse4n57j8",
@@ -54,5 +54,13 @@
     "description": "remove claude-progress from anywhere in code or prompts as it's no longer needed",
     "steps": [],
     "status": "verified"
+  },
+  {
+    "id": "feature-1765264341539-km1238av9",
+    "category": "Core",
+    "description": "remove the code view link",
+    "steps": [],
+    "status": "in_progress",
+    "startedAt": "2025-12-09T07:12:24.361Z"
   }
 ]

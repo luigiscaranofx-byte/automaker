@@ -894,3 +894,352 @@ export async function setupMockProjectWithInProgressFeatures(
     options
   );
 }
+
+/**
+ * Navigate to the spec view
+ */
+export async function navigateToSpec(page: Page): Promise<void> {
+  await page.goto("/");
+
+  // Wait for the page to load
+  await page.waitForLoadState("networkidle");
+
+  // Click on the Spec nav button
+  const specNav = page.locator('[data-testid="nav-spec"]');
+  if (await specNav.isVisible().catch(() => false)) {
+    await specNav.click();
+  }
+
+  // Wait for the spec view to be visible
+  await waitForElement(page, "spec-view", { timeout: 10000 });
+}
+
+/**
+ * Get the spec editor element
+ */
+export async function getSpecEditor(page: Page): Promise<Locator> {
+  return page.locator('[data-testid="spec-editor"]');
+}
+
+/**
+ * Get the spec editor content
+ */
+export async function getSpecEditorContent(page: Page): Promise<string> {
+  const editor = await getSpecEditor(page);
+  return await editor.inputValue();
+}
+
+/**
+ * Set the spec editor content
+ */
+export async function setSpecEditorContent(
+  page: Page,
+  content: string
+): Promise<void> {
+  const editor = await getSpecEditor(page);
+  await editor.fill(content);
+}
+
+/**
+ * Click the save spec button
+ */
+export async function clickSaveSpec(page: Page): Promise<void> {
+  await clickElement(page, "save-spec");
+}
+
+/**
+ * Click the reload spec button
+ */
+export async function clickReloadSpec(page: Page): Promise<void> {
+  await clickElement(page, "reload-spec");
+}
+
+/**
+ * Check if the spec view path display shows the correct .automaker path
+ */
+export async function getDisplayedSpecPath(page: Page): Promise<string | null> {
+  const specView = page.locator('[data-testid="spec-view"]');
+  const pathElement = specView.locator("p.text-muted-foreground").first();
+  return await pathElement.textContent();
+}
+
+/**
+ * Get a kanban column by its ID
+ */
+export async function getKanbanColumn(
+  page: Page,
+  columnId: string
+): Promise<Locator> {
+  return page.locator(`[data-testid="kanban-column-${columnId}"]`);
+}
+
+/**
+ * Get the width of a kanban column
+ */
+export async function getKanbanColumnWidth(
+  page: Page,
+  columnId: string
+): Promise<number> {
+  const column = page.locator(`[data-testid="kanban-column-${columnId}"]`);
+  const box = await column.boundingBox();
+  return box?.width ?? 0;
+}
+
+/**
+ * Check if a kanban column has CSS columns (masonry) layout
+ */
+export async function hasKanbanColumnMasonryLayout(
+  page: Page,
+  columnId: string
+): Promise<boolean> {
+  const column = page.locator(`[data-testid="kanban-column-${columnId}"]`);
+  const contentDiv = column.locator("> div").nth(1); // Second child is the content area
+
+  const columnCount = await contentDiv.evaluate((el) => {
+    const style = window.getComputedStyle(el);
+    return style.columnCount;
+  });
+
+  return columnCount === "2";
+}
+
+/**
+ * Set up a mock project with a specific current view for route persistence testing
+ */
+export async function setupMockProjectWithView(
+  page: Page,
+  view: string
+): Promise<void> {
+  await page.addInitScript((currentView: string) => {
+    const mockProject = {
+      id: "test-project-1",
+      name: "Test Project",
+      path: "/mock/test-project",
+      lastOpened: new Date().toISOString(),
+    };
+
+    const mockState = {
+      state: {
+        projects: [mockProject],
+        currentProject: mockProject,
+        currentView: currentView,
+        theme: "dark",
+        sidebarOpen: true,
+        apiKeys: { anthropic: "", google: "" },
+        chatSessions: [],
+        chatHistoryOpen: false,
+        maxConcurrency: 3,
+      },
+      version: 0,
+    };
+
+    localStorage.setItem("automaker-storage", JSON.stringify(mockState));
+  }, view);
+}
+
+/**
+ * Navigate to a specific view using the sidebar navigation
+ */
+export async function navigateToView(
+  page: Page,
+  viewId: string
+): Promise<void> {
+  const navSelector = viewId === "settings" ? "settings-button" : `nav-${viewId}`;
+  await clickElement(page, navSelector);
+  await page.waitForTimeout(100);
+}
+
+/**
+ * Get the current view from the URL or store (checks which view is active)
+ */
+export async function getCurrentView(page: Page): Promise<string | null> {
+  // Get the current view from zustand store via localStorage
+  const storage = await page.evaluate(() => {
+    const item = localStorage.getItem("automaker-storage");
+    return item ? JSON.parse(item) : null;
+  });
+
+  return storage?.state?.currentView || null;
+}
+
+/**
+ * Check if the drag handle is visible for a specific feature card
+ */
+export async function isDragHandleVisibleForFeature(
+  page: Page,
+  featureId: string
+): Promise<boolean> {
+  const dragHandle = page.locator(`[data-testid="drag-handle-${featureId}"]`);
+  return await dragHandle.isVisible().catch(() => false);
+}
+
+/**
+ * Get the drag handle element for a specific feature card
+ */
+export async function getDragHandleForFeature(
+  page: Page,
+  featureId: string
+): Promise<Locator> {
+  return page.locator(`[data-testid="drag-handle-${featureId}"]`);
+}
+
+/**
+ * Navigate to the welcome view (clear project selection)
+ */
+export async function navigateToWelcome(page: Page): Promise<void> {
+  await page.goto("/");
+  await page.waitForLoadState("networkidle");
+  await waitForElement(page, "welcome-view", { timeout: 10000 });
+}
+
+/**
+ * Set up an empty localStorage (no projects) to show welcome screen
+ */
+export async function setupEmptyLocalStorage(page: Page): Promise<void> {
+  await page.addInitScript(() => {
+    const mockState = {
+      state: {
+        projects: [],
+        currentProject: null,
+        currentView: "welcome",
+        theme: "dark",
+        sidebarOpen: true,
+        apiKeys: { anthropic: "", google: "" },
+        chatSessions: [],
+        chatHistoryOpen: false,
+        maxConcurrency: 3,
+      },
+      version: 0,
+    };
+    localStorage.setItem("automaker-storage", JSON.stringify(mockState));
+  });
+}
+
+/**
+ * Set up mock projects in localStorage but with no current project (for recent projects list)
+ */
+export async function setupMockProjectsWithoutCurrent(page: Page): Promise<void> {
+  await page.addInitScript(() => {
+    const mockProjects = [
+      {
+        id: "test-project-1",
+        name: "Test Project 1",
+        path: "/mock/test-project-1",
+        lastOpened: new Date().toISOString(),
+      },
+      {
+        id: "test-project-2",
+        name: "Test Project 2",
+        path: "/mock/test-project-2",
+        lastOpened: new Date(Date.now() - 86400000).toISOString(), // 1 day ago
+      },
+    ];
+
+    const mockState = {
+      state: {
+        projects: mockProjects,
+        currentProject: null,
+        currentView: "welcome",
+        theme: "dark",
+        sidebarOpen: true,
+        apiKeys: { anthropic: "", google: "" },
+        chatSessions: [],
+        chatHistoryOpen: false,
+        maxConcurrency: 3,
+      },
+      version: 0,
+    };
+
+    localStorage.setItem("automaker-storage", JSON.stringify(mockState));
+  });
+}
+
+/**
+ * Check if the project initialization dialog is visible
+ */
+export async function isProjectInitDialogVisible(page: Page): Promise<boolean> {
+  const dialog = page.locator('[data-testid="project-init-dialog"]');
+  return await dialog.isVisible();
+}
+
+/**
+ * Wait for the project initialization dialog to appear
+ */
+export async function waitForProjectInitDialog(
+  page: Page,
+  options?: { timeout?: number }
+): Promise<Locator> {
+  return await waitForElement(page, "project-init-dialog", options);
+}
+
+/**
+ * Close the project initialization dialog
+ */
+export async function closeProjectInitDialog(page: Page): Promise<void> {
+  const closeButton = page.locator('[data-testid="close-init-dialog"]');
+  await closeButton.click();
+}
+
+/**
+ * Check if the project opening overlay is visible
+ */
+export async function isProjectOpeningOverlayVisible(page: Page): Promise<boolean> {
+  const overlay = page.locator('[data-testid="project-opening-overlay"]');
+  return await overlay.isVisible();
+}
+
+/**
+ * Wait for the project opening overlay to disappear
+ */
+export async function waitForProjectOpeningOverlayHidden(
+  page: Page,
+  options?: { timeout?: number }
+): Promise<void> {
+  await waitForElementHidden(page, "project-opening-overlay", options);
+}
+
+/**
+ * Click on a recent project in the welcome view
+ */
+export async function clickRecentProject(
+  page: Page,
+  projectId: string
+): Promise<void> {
+  await clickElement(page, `recent-project-${projectId}`);
+}
+
+/**
+ * Click the open project card in the welcome view
+ */
+export async function clickOpenProjectCard(page: Page): Promise<void> {
+  await clickElement(page, "open-project-card");
+}
+
+/**
+ * Check if a navigation item exists in the sidebar
+ */
+export async function isNavItemVisible(
+  page: Page,
+  navId: string
+): Promise<boolean> {
+  const navItem = page.locator(`[data-testid="nav-${navId}"]`);
+  return await navItem.isVisible().catch(() => false);
+}
+
+/**
+ * Get all visible navigation items in the sidebar
+ */
+export async function getVisibleNavItems(page: Page): Promise<string[]> {
+  const navItems = page.locator('[data-testid^="nav-"]');
+  const count = await navItems.count();
+  const items: string[] = [];
+
+  for (let i = 0; i < count; i++) {
+    const testId = await navItems.nth(i).getAttribute("data-testid");
+    if (testId) {
+      items.push(testId.replace("nav-", ""));
+    }
+  }
+
+  return items;
+}

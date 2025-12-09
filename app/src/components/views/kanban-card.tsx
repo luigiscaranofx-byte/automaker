@@ -76,16 +76,15 @@ export function KanbanCard({ feature, onEdit, onDelete, onViewOutput, onVerify, 
           </div>
         )}
         <div className="flex items-start gap-2">
-          <div
-            {...listeners}
-            className={cn(
-              "mt-0.5 touch-none",
-              isDraggable ? "cursor-grab" : "cursor-not-allowed opacity-50"
-            )}
-            data-testid={`drag-handle-${feature.id}`}
-          >
-            <GripVertical className="w-4 h-4 text-muted-foreground" />
-          </div>
+          {isDraggable && (
+            <div
+              {...listeners}
+              className="mt-0.5 touch-none cursor-grab"
+              data-testid={`drag-handle-${feature.id}`}
+            >
+              <GripVertical className="w-4 h-4 text-muted-foreground" />
+            </div>
+          )}
           <div className="flex-1 min-w-0">
             <CardTitle className="text-sm leading-tight">
               {feature.description}

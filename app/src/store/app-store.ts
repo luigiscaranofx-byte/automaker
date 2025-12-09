@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Project } from "@/lib/electron";
 
-export type ViewMode = "welcome" | "spec" | "board" | "code" | "agent" | "settings" | "tools" | "interview" | "context";
+export type ViewMode = "welcome" | "spec" | "board" | "agent" | "settings" | "tools" | "interview" | "context";
 export type ThemeMode = "light" | "dark" | "system";
 
 export interface ApiKeys {
@@ -398,6 +398,7 @@ export const useAppStore = create<AppState & AppActions>()(
       partialize: (state) => ({
         projects: state.projects,
         currentProject: state.currentProject,
+        currentView: state.currentView,
         theme: state.theme,
         sidebarOpen: state.sidebarOpen,
         apiKeys: state.apiKeys,
