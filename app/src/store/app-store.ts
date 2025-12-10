@@ -86,6 +86,7 @@ export interface Feature {
   startedAt?: string; // ISO timestamp for when the card moved to in_progress
   skipTests?: boolean; // When true, skip TDD approach and require manual verification
   summary?: string; // Summary of what was done/modified by the agent
+  error?: string; // Error message if the agent errored during processing
 }
 
 export interface AppState {

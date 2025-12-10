@@ -581,7 +581,7 @@ export function Sidebar() {
                           isActive
                             ? "bg-sidebar-accent/50 text-foreground border border-sidebar-border"
                             : "text-muted-foreground hover:text-foreground hover:bg-sidebar-accent/50",
-                          !sidebarOpen && "justify-center"
+                          sidebarOpen ? "justify-start" : "justify-center"
                         )}
                         title={!sidebarOpen ? item.label : undefined}
                         data-testid={`nav-${item.id}`}
@@ -599,7 +599,7 @@ export function Sidebar() {
                         />
                         <span
                           className={cn(
-                            "ml-2.5 font-medium text-sm flex-1",
+                            "ml-2.5 font-medium text-sm flex-1 text-left",
                             sidebarOpen ? "hidden lg:block" : "hidden"
                           )}
                         >
@@ -665,7 +665,7 @@ export function Sidebar() {
             />
             <span
               className={cn(
-                "ml-2.5 font-medium text-sm flex-1",
+                "ml-2.5 font-medium text-sm flex-1 text-left",
                 sidebarOpen ? "hidden lg:block" : "hidden"
               )}
             >

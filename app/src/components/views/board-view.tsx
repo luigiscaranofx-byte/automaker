@@ -338,16 +338,32 @@ export function BoardView() {
   }, [showAddDialog, defaultSkipTests]);
 
 
-  // Listen for auto mode feature completion and reload features
+  // Listen for auto mode feature completion and errors to reload features
   useEffect(() => {
     const api = getElectronAPI();
     if (!api?.autoMode) return;
+
+    const { removeRunningTask } = useAppStore.getState();
 
     const unsubscribe = api.autoMode.onEvent((event) => {
       if (event.type === "auto_mode_feature_complete") {
         // Reload features when a feature is completed
         console.log("[Board] Feature completed, reloading features...");
         loadFeatures();
+      } else if (event.type === "auto_mode_error") {
+        // Reload features when an error occurs (feature moved to waiting_approval)
+        console.log("[Board] Feature error, reloading features...", event.error);
+
+        // Remove from running tasks so it moves to the correct column
+        if (event.featureId) {
+          removeRunningTask(event.featureId);
+        }
+
+        loadFeatures();
+        // Show error toast
+        toast.error("Agent encountered an error", {
+          description: event.error || "Check the logs for details",
+        });
       }
     });
 
@@ -439,6 +455,7 @@ export function BoardView() {
         imagePaths: f.imagePaths,
         skipTests: f.skipTests,
         summary: f.summary,
+        error: f.error,
       }));
       await api.writeFile(
         `${currentProject.path}/.automaker/feature_list.json`,

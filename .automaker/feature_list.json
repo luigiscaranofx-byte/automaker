@@ -1,106 +1,20 @@
 [
   {
-    "id": "feature-1765328064583-6zpz7ddil",
-    "category": "Kanban",
-    "description": "remove the auto mode activity panel completley.",
+    "id": "feature-1765335919754-r010d1fw5",
+    "category": "Uncategorized",
+    "description": "what does the text in the button say?\n",
     "steps": [],
     "status": "waiting_approval",
-    "startedAt": "2025-12-10T00:55:21.540Z",
+    "startedAt": "2025-12-10T03:05:34.894Z",
     "imagePaths": [
       {
-        "id": "img-1765328011980-j8d2r6b78",
-        "path": "/var/folders/yk/56l0_s6978qfh521xf1dtx3r0000gn/T/automaker-images/1765328011979_Screenshot_2025-12-09_at_7.53.30_PM.png",
-        "filename": "Screenshot 2025-12-09 at 7.53.30 PM.png",
+        "id": "img-1765335919132-0x3t37l1r",
+        "path": "/Users/webdevcody/Library/Application Support/automaker/images/1765335919131-g4qvs053g_Screenshot_2025-12-09_at_10.05.17_PM.png",
+        "filename": "Screenshot 2025-12-09 at 10.05.17 PM.png",
         "mimeType": "image/png"
       }
     ],
     "skipTests": true,
-    "summary": "Removed auto mode activity panel completely. Deleted: auto-mode-log.tsx. Modified: board-view.tsx - removed AutoModeLog import, showActivityLog state, activity toggle button, and activity panel rendering. Also removed unused cn import and ChevronUp/ChevronDown icons."
-  },
-  {
-    "id": "feature-1765330657132-oapdvbygc",
-    "category": "Uncategorized",
-    "description": "these buttons should be refactored to match more with selected theme, make sure they are set to use the button component variant styles",
-    "steps": [],
-    "status": "waiting_approval",
-    "startedAt": "2025-12-10T01:37:40.700Z",
-    "imagePaths": [
-      {
-        "id": "img-1765330619380-q9tu8blks",
-        "path": "/var/folders/yk/56l0_s6978qfh521xf1dtx3r0000gn/T/automaker-images/1765330619376_Screenshot_2025-12-09_at_8.36.56_PM.png",
-        "filename": "Screenshot 2025-12-09 at 8.36.56 PM.png",
-        "mimeType": "image/png"
-      }
-    ],
-    "skipTests": true,
-    "summary": "Refactored theme selector and kanban detail level buttons to use Button component variants. Modified: settings-view.tsx. Changed 12 theme buttons and 3 kanban detail buttons from raw &lt;button&gt; to &lt;Button&gt; with dynamic variant (secondary when selected, outline when unselected) and brand-500 ring highlight for selected state."
-  },
-  {
-    "id": "feature-1765330774043-35l9kw70q",
-    "category": "Kanban",
-    "description": "Increase the width of this modal and reduce font size of log output to make it easier to fit more output in modal",
-    "steps": [],
-    "status": "waiting_approval",
-    "imagePaths": [
-      {
-        "id": "img-1765330741800-jhmtz9ttc",
-        "path": "/var/folders/yk/56l0_s6978qfh521xf1dtx3r0000gn/T/automaker-images/1765330741799_Screenshot_2025-12-09_at_8.38.59_PM.png",
-        "filename": "Screenshot 2025-12-09 at 8.38.59 PM.png",
-        "mimeType": "image/png"
-      }
-    ],
-    "skipTests": true,
-    "summary": "Increased modal width from max-w-4xl to max-w-6xl and reduced log output font sizes from text-sm to text-xs. Modified: agent-output-modal.tsx (modal width + container font), log-viewer.tsx (log entry content + preview text fonts)."
-  },
-  {
-    "id": "feature-1765330800921-uwy5iu3lp",
-    "category": "Uncategorized",
-    "description": "what color is the screenshot button? don't change code just answer.",
-    "steps": [],
-    "status": "waiting_approval",
-    "imagePaths": [
-      {
-        "id": "img-1765330783407-msplpgmwk",
-        "path": "/var/folders/yk/56l0_s6978qfh521xf1dtx3r0000gn/T/automaker-images/1765330783407_Screenshot_2025-12-09_at_8.39.40_PM.png",
-        "filename": "Screenshot 2025-12-09 at 8.39.40 PM.png",
-        "mimeType": "image/png"
-      }
-    ],
-    "skipTests": true,
-    "summary": "Answered question about screenshot button color. The image attachment button (Paperclip icon) is blue when active (bg-blue-100/text-blue-600 light, bg-blue-900/text-blue-400 dark) and uses standard outline styling when inactive. No code changes made."
-  },
-  {
-    "id": "feature-1765331813319-jzlk7eku2",
-    "category": "Uncategorized",
-    "description": "describe the attached image do not change code",
-    "steps": [],
-    "status": "verified",
-    "startedAt": "2025-12-10T02:02:54.785Z",
-    "imagePaths": [
-      {
-        "id": "img-1765331797511-v4ssc1hha",
-        "path": "/Users/webdevcody/Library/Application Support/automaker/images/1765331797510-ypiiz13rt_Screenshot_2025-12-09_at_8.56.34_PM.png",
-        "filename": "Screenshot 2025-12-09 at 8.56.34 PM.png",
-        "mimeType": "image/png"
-      }
-    ],
-    "skipTests": true
-  },
-  {
-    "id": "feature-1765333165618-qmik9gy7p",
-    "category": "Uncategorized",
-    "description": "what is the text in the attache image say?",
-    "steps": [],
-    "status": "in_progress",
-    "startedAt": "2025-12-10T02:19:28.342Z",
-    "imagePaths": [
-      {
-        "id": "img-1765333155109-on4lk435f",
-        "path": "/Users/webdevcody/Library/Application Support/automaker/images/1765333155106-czd46vc93_Screenshot_2025-12-09_at_9.19.13_PM.png",
-        "filename": "Screenshot 2025-12-09 at 9.19.13 PM.png",
-        "mimeType": "image/png"
-      }
-    ],
-    "skipTests": true
+    "summary": "Investigated button text in the app. Main buttons found in welcome-view.tsx: \"Create Project\" (primary action), \"Browse Folder\" (secondary action), \"Browse\" (directory selector), \"Cancel\", \"Get Started\". No code changes made - this was an investigative question."
   }
 ]

@@ -36,8 +36,9 @@ class FeatureLoader {
    * @param {string} status - The new status
    * @param {string} projectPath - Path to the project
    * @param {string} [summary] - Optional summary of what was done
+   * @param {string} [error] - Optional error message if feature errored
    */
-  async updateFeatureStatus(featureId, status, projectPath, summary) {
+  async updateFeatureStatus(featureId, status, projectPath, summary, error) {
     const featuresPath = path.join(
       projectPath,
       ".automaker",
@@ -98,6 +99,14 @@ class FeatureLoader {
       feature.summary = summary;
     }
 
+    // Update the error field (set or clear)
+    if (error) {
+      feature.error = error;
+    } else {
+      // Clear any previous error when status changes without error
+      delete feature.error;
+    }
+
     // Save back to file
     const toSave = features.map((f) => {
       const featureData = {
@@ -122,6 +131,9 @@ class FeatureLoader {
       }
       if (f.summary !== undefined) {
         featureData.summary = f.summary;
+      }
+      if (f.error !== undefined) {
+        featureData.error = f.error;
       }
       return featureData;
     });
