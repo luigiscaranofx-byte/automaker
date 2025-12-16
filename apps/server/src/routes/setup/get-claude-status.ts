@@ -39,14 +39,17 @@ export async function getClaudeStatus() {
   } catch {
     // Not in PATH, try common locations based on platform
     const commonPaths = isWindows
-      ? [
-          // Windows-specific paths
-          path.join(os.homedir(), ".local", "bin", "claude.exe"),
-          path.join(os.homedir(), "AppData", "Roaming", "npm", "claude.cmd"),
-          path.join(os.homedir(), "AppData", "Roaming", "npm", "claude"),
-          path.join(os.homedir(), ".npm-global", "bin", "claude.cmd"),
-          path.join(os.homedir(), ".npm-global", "bin", "claude"),
-        ]
+      ? (() => {
+          const appData = process.env.APPDATA || path.join(os.homedir(), "AppData", "Roaming");
+          return [
+            // Windows-specific paths
+            path.join(os.homedir(), ".local", "bin", "claude.exe"),
+            path.join(appData, "npm", "claude.cmd"),
+            path.join(appData, "npm", "claude"),
+            path.join(appData, ".npm-global", "bin", "claude.cmd"),
+            path.join(appData, ".npm-global", "bin", "claude"),
+          ];
+        })()
       : [
           // Unix (Linux/macOS) paths
           path.join(os.homedir(), ".local", "bin", "claude"),
