@@ -2441,9 +2441,9 @@ test.describe("Worktree Integration Tests", () => {
     // Verify worktree was NOT created during editing (worktrees are created at execution time)
     expect(fs.existsSync(expectedWorktreePath)).toBe(false);
 
-    // Verify the branch was created (if branch creation is part of the autocomplete flow)
+    // Verify branch was NOT created (created at execution time)
     const branches = await listBranches(testRepo.path);
-    expect(branches).toContain(newBranchName);
+    expect(branches).not.toContain(newBranchName);
 
     // Verify feature was updated with correct branchName only
     // Note: worktreePath is no longer stored - worktrees are created server-side at execution time
@@ -2593,7 +2593,8 @@ test.describe("Worktree Integration Tests", () => {
     );
     expect(matchingWorktrees.length).toBe(1);
 
-    // Verify feature was updated with the correct worktreePath
+    // Verify feature was updated with the correct branchName
+    // Note: worktreePath is no longer stored - worktrees are created server-side at execution time
     const featuresDir = path.join(testRepo.path, ".automaker", "features");
     const featureDirs = fs.readdirSync(featuresDir);
     const featureDir = featureDirs.find((dir) => {
@@ -2608,6 +2609,7 @@ test.describe("Worktree Integration Tests", () => {
     const featureFilePath = path.join(featuresDir, featureDir!, "feature.json");
     const featureData = JSON.parse(fs.readFileSync(featureFilePath, "utf-8"));
     expect(featureData.branchName).toBe(existingBranch);
-    expect(featureData.worktreePath).toBe(existingWorktreePath);
+    // worktreePath should not exist in the feature data (worktrees are created at execution time)
+    expect(featureData.worktreePath).toBeUndefined();
   });
 });
