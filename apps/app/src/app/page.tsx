@@ -150,6 +150,7 @@ function HomeContent() {
       "cream",
       "sunset",
       "gray",
+      "clean",
     ];
 
     // Remove all theme classes

@@ -33,7 +33,8 @@ export type Theme =
   | "red"
   | "cream"
   | "sunset"
-  | "gray";
+  | "gray"
+  | "clean";
 
 export type KanbanDetailLevel = "minimal" | "standard" | "detailed";
 

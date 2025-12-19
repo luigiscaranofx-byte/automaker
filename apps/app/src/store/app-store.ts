@@ -33,7 +33,8 @@ export type ThemeMode =
   | "red"
   | "cream"
   | "sunset"
-  | "gray";
+  | "gray"
+  | "clean";
 
 export type KanbanCardDetailLevel = "minimal" | "standard" | "detailed";
 

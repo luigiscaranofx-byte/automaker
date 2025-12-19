@@ -5,6 +5,7 @@ import { HotkeyButton } from "@/components/ui/hotkey-button";
 import { Slider } from "@/components/ui/slider";
 import { Play, StopCircle, Plus, Users } from "lucide-react";
 import { KeyboardShortcut } from "@/hooks/use-keyboard-shortcuts";
+import { useAppStore } from "@/store/app-store";
 
 interface BoardHeaderProps {
   projectName: string;
@@ -29,6 +30,59 @@ export function BoardHeader({
   addFeatureShortcut,
   isMounted,
 }: BoardHeaderProps) {
+  const { getEffectiveTheme } = useAppStore();
+  const effectiveTheme = getEffectiveTheme();
+  const isCleanTheme = effectiveTheme === "clean";
+
+  if (isCleanTheme) {
+    return (
+      <header className="h-16 flex items-center justify-between px-8 border-b border-white/5 bg-[#0b101a]/40 backdrop-blur-md z-20 shrink-0">
+        <div>
+          <h2 className="text-lg font-bold text-white tracking-tight">Kanban Board</h2>
+          <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold mono">
+            {projectName}
+          </p>
+        </div>
+
+        <div className="flex items-center gap-5">
+          {/* Concurrency Display (Visual only to match mockup for now, or interactive if needed) */}
+          <div className="flex items-center bg-white/5 border border-white/10 rounded-full px-4 py-1.5 gap-3">
+            <Users className="w-4 h-4 text-slate-500" />
+            <div className="toggle-track">
+              <div className="toggle-thumb"></div>
+            </div>
+            <span className="mono text-xs font-bold text-slate-400">{maxConcurrency}</span>
+          </div>
+
+          {/* Auto Mode Button */}
+          {isAutoModeRunning ? (
+            <button
+              className="flex items-center gap-2 glass px-5 py-2 rounded-xl text-xs font-bold hover:bg-white/10 transition text-rose-400 border-rose-500/30"
+              onClick={onStopAutoMode}
+            >
+              <StopCircle className="w-3.5 h-3.5" /> Stop
+            </button>
+          ) : (
+            <button
+              className="flex items-center gap-2 glass px-5 py-2 rounded-xl text-xs font-bold hover:bg-white/10 transition"
+              onClick={onStartAutoMode}
+            >
+              <Play className="w-3.5 h-3.5 text-cyan-400 fill-cyan-400" /> Auto Mode
+            </button>
+          )}
+
+          {/* Add Feature Button */}
+          <button
+            className="btn-cyan px-6 py-2 rounded-xl text-xs font-black flex items-center gap-2 shadow-lg shadow-cyan-500/20"
+            onClick={onAddFeature}
+          >
+            <Plus className="w-4 h-4 stroke-[3.5px]" /> ADD FEATURE
+          </button>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <div className="flex items-center justify-between p-4 border-b border-border bg-glass backdrop-blur-md">
       <div>

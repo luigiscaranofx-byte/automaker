@@ -1,3 +1,27 @@
+/* Google Fonts for Clean Theme - Inter + JetBrains Mono */
+/* Note: Also loaded via Next.js font system in layout.tsx for better performance */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+
+/* CRITICAL: Force Inter font for clean theme at highest specificity */
+/* Using both direct font name AND CSS variable for maximum compatibility */
+html.clean,
+html.clean
+  *:not(code):not(pre):not(.mono):not(.font-mono):not(.tabular-nums):not(
+    [class*="Mono"]
+  ) {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif !important;
+}
+html.clean code,
+html.clean pre,
+html.clean .mono,
+html.clean .font-mono,
+html.clean .tabular-nums,
+html.clean [class*="Mono"] {
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace,
+    SFMono-Regular, monospace !important;
+}
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -16,6 +40,7 @@
 @custom-variant cream (&:is(.cream *));
 @custom-variant sunset (&:is(.sunset *));
 @custom-variant gray (&:is(.gray *));
+@custom-variant clean (&:is(.clean *));
 
 @theme inline {
   --color-background: var(--background);
@@ -175,9 +200,12 @@
   /* Shadow tokens */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
   /* Transition tokens */
   --transition-fast: 150ms ease;
@@ -201,7 +229,7 @@
     /* Card and popover backgrounds */
     --card: oklch(0.14 0 0);
     --card-foreground: oklch(1 0 0);
-    --popover: oklch(0.10 0 0);
+    --popover: oklch(0.1 0 0);
     --popover-foreground: oklch(1 0 0);
 
     /* Brand colors - purple/violet theme */
@@ -273,9 +301,12 @@
     /* Shadow tokens - darker for dark mode */
     --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+      0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4),
+      0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5),
+      0 10px 10px -5px rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -350,7 +381,7 @@
   /* Card and popover backgrounds */
   --card: oklch(0.14 0 0); /* slightly lighter than background for contrast */
   --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.10 0 0); /* slightly lighter than background */
+  --popover: oklch(0.1 0 0); /* slightly lighter than background */
   --popover-foreground: oklch(1 0 0);
 
   /* Brand colors - purple/violet theme */
@@ -422,9 +453,12 @@
   /* Shadow tokens - darker for dark mode */
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4),
+    0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5),
+    0 10px 10px -5px rgba(0, 0, 0, 0.3);
 }
 
 .retro {
@@ -1469,6 +1503,1997 @@
   --status-waiting: oklch(0.68 0.1 220);
 }
 
+.clean {
+  /* Clean Theme - 1:1 copy from HTML mockup
+     Modern glassmorphism with cyan accents */
+
+  /* Font overrides - Inter for sans, JetBrains Mono for mono */
+  /* Using var(--font-inter) from Next.js font system + direct font name as fallback */
+  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace,
+    SFMono-Regular, monospace;
+  --font-geist-sans: var(--font-inter), "Inter", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-geist-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace,
+    SFMono-Regular, monospace;
+
+  /* Core colors from HTML mockup */
+  --bg-deep: #0b101a;
+  --sidebar-bg: rgba(13, 17, 26, 0.7);
+  --accent-cyan: #22d3ee;
+  --accent-orange: #f59e0b;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --card-radius: 1.5rem;
+
+  /* Background - exact match to #0b101a */
+  --background: #0b101a;
+  --background-50: rgba(11, 16, 26, 0.5);
+  --background-80: rgba(11, 16, 26, 0.8);
+
+  /* Foreground - exact match to #e2e8f0 */
+  --foreground: #e2e8f0;
+  --foreground-secondary: #94a3b8;
+  --foreground-muted: #64748b;
+
+  /* Card - glass effect base */
+  --card: rgba(255, 255, 255, 0.03);
+  --card-foreground: #e2e8f0;
+  --popover: rgba(13, 17, 26, 0.95);
+  --popover-foreground: #e2e8f0;
+
+  /* Primary - Cyan #22d3ee */
+  --primary: #22d3ee;
+  --primary-foreground: #0b101a;
+
+  /* Brand colors - Cyan variations */
+  --brand-400: #67e8f9;
+  --brand-500: #22d3ee;
+  --brand-600: #06b6d4;
+
+  /* Secondary - Glass white */
+  --secondary: rgba(255, 255, 255, 0.03);
+  --secondary-foreground: #e2e8f0;
+
+  /* Muted */
+  --muted: rgba(255, 255, 255, 0.05);
+  --muted-foreground: #64748b;
+
+  /* Accent - Subtle glass */
+  --accent: rgba(255, 255, 255, 0.07);
+  --accent-foreground: #e2e8f0;
+
+  /* Destructive - Red #ef4444 */
+  --destructive: #ef4444;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.07);
+  --border-glass: rgba(255, 255, 255, 0.07);
+
+  /* Input */
+  --input: rgba(255, 255, 255, 0.05);
+  --ring: #22d3ee;
+
+  /* Chart colors */
+  --chart-1: #22d3ee; /* Cyan */
+  --chart-2: #f59e0b; /* Orange */
+  --chart-3: #10b981; /* Green */
+  --chart-4: #8b5cf6; /* Purple */
+  --chart-5: #ef4444; /* Red */
+
+  /* Sidebar - Glass effect */
+  --sidebar: rgba(13, 17, 26, 0.7);
+  --sidebar-foreground: #e2e8f0;
+  --sidebar-primary: #22d3ee;
+  --sidebar-primary-foreground: #0b101a;
+  --sidebar-accent: rgba(255, 255, 255, 0.05);
+  --sidebar-accent-foreground: #e2e8f0;
+  --sidebar-border: rgba(255, 255, 255, 0.04);
+  --sidebar-ring: #22d3ee;
+
+  /* Action button colors */
+  --action-view: #22d3ee;
+  --action-view-hover: #06b6d4;
+  --action-followup: #f59e0b;
+  --action-followup-hover: #d97706;
+  --action-commit: #10b981;
+  --action-commit-hover: #059669;
+  --action-verify: #10b981;
+  --action-verify-hover: #059669;
+
+  /* Running indicator - Cyan */
+  --running-indicator: #22d3ee;
+  --running-indicator-text: #67e8f9;
+
+  /* Status colors */
+  --status-success: #10b981;
+  --status-success-bg: rgba(16, 185, 129, 0.15);
+  --status-warning: #f59e0b;
+  --status-warning-bg: rgba(245, 158, 11, 0.15);
+  --status-error: #ef4444;
+  --status-error-bg: rgba(239, 68, 68, 0.15);
+  --status-info: #22d3ee;
+  --status-info-bg: rgba(34, 211, 238, 0.15);
+  --status-backlog: #475569;
+  --status-in-progress: #22d3ee;
+  --status-waiting: #f59e0b;
+
+  /* Override border-radius for cards */
+  --radius: 1.5rem;
+}
+
+/* ================================================
+   CLEAN THEME - Custom UI Components (1:1 from HTML)
+   ================================================ */
+
+/* Clean theme content background - Transparent to show prism effect */
+.clean .content-bg {
+  background: transparent !important;
+}
+
+/* Glassmorphism - Glass component */
+.clean .glass,
+.clean .clean-glass {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+/* Glassmorphism - Sidebar Glass */
+.clean .sidebar-glass,
+.clean aside.sidebar-glass,
+html.clean .sidebar-glass,
+html.clean aside.sidebar-glass {
+  width: 16rem !important; /* w-64 exact match */
+  background: rgba(13, 17, 26, 0.7) !important;
+  backdrop-filter: blur(40px) !important;
+  -webkit-backdrop-filter: blur(40px) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.04) !important;
+  box-shadow: none !important;
+  overflow: hidden !important; /* Prevent any visual leakage */
+  isolation: isolate !important; /* Create stacking context */
+}
+
+/* Ensure no hover artifacts on sidebar */
+.clean .sidebar-glass:hover,
+.clean aside.sidebar-glass:hover,
+html.clean .sidebar-glass:hover {
+  background: rgba(13, 17, 26, 0.7) !important;
+  backdrop-filter: blur(40px) !important;
+  -webkit-backdrop-filter: blur(40px) !important;
+  box-shadow: none !important;
+}
+
+/* Navigation Active State - no overflow beyond sidebar */
+.clean .nav-active {
+  background: linear-gradient(
+    90deg,
+    rgba(34, 211, 238, 0.12) 0%,
+    rgba(34, 211, 238, 0) 100%
+  ) !important;
+  border-left: 3px solid #22d3ee !important;
+  color: #fff !important;
+  overflow: hidden;
+}
+
+/* Column Specific Visuals */
+/* ================================================
+   COLUMN STYLING - Exact 1:1 match with HTML mockup
+
+   Backlog: NO rounded corners, NO padding, NO special styling
+   Others: rounded-[2.5rem] p-3 with glassmorphism + col-* effects
+   ================================================ */
+
+/* Backlog column - EXPLICITLY NO special styling */
+.clean [data-column-id="backlog"],
+.clean [data-testid="kanban-column-backlog"] {
+  border-radius: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* In Progress column - rounded-[2.5rem] p-3 with cyan effects */
+.clean .col-in-progress,
+.clean [data-column-id="in_progress"],
+.clean [data-testid="kanban-column-in_progress"] {
+  border-radius: 2.5rem !important;
+  padding: 0.75rem !important; /* p-3 */
+  border: 1px solid rgba(34, 211, 238, 0.25) !important;
+  background: rgba(34, 211, 238, 0.02) !important;
+  box-shadow: inset 0 0 40px rgba(34, 211, 238, 0.03) !important;
+}
+
+/* Waiting Approval column - rounded-[2.5rem] p-3 with orange border-top */
+.clean .col-waiting,
+.clean [data-column-id="waiting_approval"],
+.clean [data-testid="kanban-column-waiting_approval"] {
+  border-radius: 2.5rem !important;
+  padding: 0.75rem !important; /* p-3 */
+  border-top: 2px solid rgba(245, 158, 11, 0.3) !important;
+}
+
+/* Verified column - rounded-[2.5rem] p-3 with green border-top */
+.clean .col-verified,
+.clean [data-column-id="verified"],
+.clean [data-testid="kanban-column-verified"] {
+  border-radius: 2.5rem !important;
+  padding: 0.75rem !important; /* p-3 */
+  border-top: 2px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Status Dot Base */
+.clean .status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* Status Dot Glow Effects */
+.clean .glow-cyan,
+.clean .status-dot-in-progress {
+  box-shadow: 0 0 10px #22d3ee !important;
+  background-color: #22d3ee !important;
+}
+
+.clean .glow-orange,
+.clean .status-dot-waiting {
+  box-shadow: 0 0 10px #f59e0b !important;
+  background-color: #f59e0b !important;
+}
+
+.clean .glow-green,
+.clean .status-dot-verified,
+.clean .status-dot-success {
+  box-shadow: 0 0 10px #10b981 !important;
+  background-color: #10b981 !important;
+}
+
+/* Shortcut Badge */
+.clean .shortcut-badge {
+  font-size: 9px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  padding: 1px 5px !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-weight: 600 !important;
+}
+
+/* Toggle Switch */
+.clean .toggle-track {
+  width: 42px !important;
+  height: 20px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px !important;
+  position: relative !important;
+  cursor: pointer !important;
+}
+
+.clean .toggle-thumb {
+  position: absolute !important;
+  right: 3px !important;
+  top: 3px !important;
+  width: 12px !important;
+  height: 12px !important;
+  background: #22d3ee !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 8px #22d3ee !important;
+}
+
+/* Kanban Card Styles */
+.clean .kanban-card {
+  border-radius: 1.5rem !important;
+  padding: 1.5rem !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.clean .kanban-card:hover {
+  transform: translateY(-3px) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Active/Running Card - Cyan highlight */
+.clean .kanban-card-active,
+.clean .kanban-card.is-running {
+  border-color: rgba(34, 211, 238, 0.4) !important;
+  background: rgba(34, 211, 238, 0.08) !important;
+}
+
+/* Cyan Button */
+.clean .btn-cyan {
+  background: #22d3ee !important;
+  color: #0b101a !important;
+  font-weight: 800 !important;
+  transition: all 0.2s !important;
+}
+
+.clean .btn-cyan:hover {
+  filter: brightness(1.1) !important;
+  box-shadow: 0 0 15px rgba(34, 211, 238, 0.4) !important;
+}
+
+/* Make button (cyan variant) */
+.clean .btn-make {
+  background: rgba(34, 211, 238, 0.1) !important;
+  color: #22d3ee !important;
+  border: 1px solid rgba(34, 211, 238, 0.2) !important;
+}
+
+.clean .btn-make:hover {
+  background: rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Commit button (green variant) */
+.clean .btn-commit {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Running badge (orange) */
+.clean .running-badge {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
+}
+
+/* Running agents count badge */
+.clean .running-agents-badge {
+  background: #22d3ee !important;
+  color: #0b101a !important;
+  font-weight: 900 !important;
+  font-size: 10px !important;
+}
+
+/* Header styling */
+.clean .header-glass {
+  background: rgba(11, 16, 26, 0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Search input */
+.clean .search-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 1rem !important;
+}
+
+.clean .search-input:focus {
+  border-color: rgba(34, 211, 238, 0.5) !important;
+  outline: none !important;
+}
+
+/* Footer section */
+.clean .footer-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Mono text */
+.clean .mono {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* Line clamp */
+.clean .line-clamp-3 {
+  display: -webkit-box !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+}
+
+/* Section headers */
+.clean .section-header {
+  font-size: 10px !important;
+  font-weight: 900 !important;
+  color: #475569 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.2em !important;
+}
+
+/* Project dropdown */
+.clean .project-dropdown {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-radius: 1rem !important;
+  padding: 0.875rem !important;
+}
+
+.clean .project-dropdown:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Count badge in column header */
+.clean .column-count {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 10px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  padding: 2px 10px !important;
+  border-radius: 9999px !important;
+  color: #64748b !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* In-progress column count - cyan */
+.clean .column-count-in-progress {
+  background: rgba(34, 211, 238, 0.1) !important;
+  color: #22d3ee !important;
+  border: 1px solid rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Verified column count - green */
+.clean .column-count-verified {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+/* Floating action button */
+.clean .fab-primary {
+  background: #22d3ee !important;
+  color: #0b101a !important;
+  box-shadow: 0 8px 32px rgba(34, 211, 238, 0.4) !important;
+}
+
+.clean .fab-primary:hover {
+  transform: scale(1.1) !important;
+}
+
+.clean .fab-primary:active {
+  transform: scale(0.95) !important;
+}
+
+/* Icon button */
+.clean .icon-button {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  color: #64748b !important;
+}
+
+.clean .icon-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+}
+
+/* Timer/Duration display */
+.clean .timer-display {
+  background: rgba(15, 23, 42, 0.5) !important;
+  color: #64748b !important;
+  font-size: 9px !important;
+  padding: 4px 8px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* Logs button styles */
+.clean .logs-button-active {
+  background: #22d3ee !important;
+  color: #0b101a !important;
+  font-weight: 900 !important;
+}
+
+.clean .logs-button {
+  background: rgba(34, 211, 238, 0.15) !important;
+  color: #22d3ee !important;
+  border: 1px solid rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Stop button */
+.clean .stop-button {
+  background: #ef4444 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2) !important;
+}
+
+.clean .stop-button:hover {
+  background: #dc2626 !important;
+}
+
+.clean .stop-button-muted {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: rgba(239, 68, 68, 0.5) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+}
+
+/* Complete button (verified) */
+.clean .complete-button {
+  background: rgba(16, 185, 129, 0.15) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+  font-weight: 900 !important;
+}
+
+/* Refine button (waiting approval) */
+.clean .refine-button {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.clean .refine-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Verified card - reduced opacity */
+.clean .verified-card {
+  opacity: 0.6 !important;
+}
+
+.clean .verified-card:hover {
+  opacity: 1 !important;
+}
+
+.clean .verified-card p {
+  text-decoration: line-through !important;
+  text-decoration-color: #475569 !important;
+}
+
+/* ================================================
+   CLEAN THEME - Additional exact HTML mockup styles
+   ================================================ */
+
+/* Card description text - exact match */
+.clean .kanban-card .card-description,
+.clean .kanban-card p {
+  font-size: 13px !important;
+  color: #cbd5e1 !important;
+  line-height: 1.625 !important;
+  font-weight: 500 !important;
+}
+
+/* Model badge - exact match: text-[10px] font-bold text-cyan-400/80 mono uppercase tracking-tight */
+.clean .model-badge,
+.clean .kanban-card [data-model-badge] {
+  font-size: 10px !important;
+  font-weight: 700 !important; /* font-bold */
+  color: rgba(34, 211, 238, 0.8) !important; /* text-cyan-400/80 */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.025em !important; /* tracking-tight */
+}
+
+/* Column header title - exact match */
+.clean .column-header-title,
+.clean [data-testid^="kanban-column-"] h3 {
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Card action buttons - exact sizing */
+/* Card action buttons - exact sizing (exclude delete and toggle buttons) */
+.clean
+  .kanban-card
+  button:not([data-testid^="delete-"]):not(
+    [data-testid^="toggle-description-"]
+  ) {
+  padding-top: 0.625rem !important;
+  padding-bottom: 0.625rem !important;
+  border-radius: 0.75rem !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+
+/* Running card running badge - orange */
+.clean .kanban-card .running-indicator {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #f59e0b !important;
+  font-size: 9px !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(245, 158, 11, 0.2) !important;
+  font-weight: 900 !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* LOGS button - flex-4 when active */
+.clean .logs-button-primary {
+  flex: 4 !important;
+  padding: 0.75rem !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Stop button exact styling */
+.clean .kanban-card .stop-button,
+.clean .kanban-card [data-testid^="force-stop-"] {
+  background: #ef4444 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2) !important;
+  flex: 1 !important;
+  padding: 0.75rem !important;
+}
+
+.clean .kanban-card .stop-button:hover,
+.clean .kanban-card [data-testid^="force-stop-"]:hover {
+  background: #dc2626 !important;
+}
+
+/* Edit button - glass style */
+.clean .edit-button {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.clean .edit-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Make button - cyan variant */
+.clean .make-button,
+.clean [data-testid^="make-"] {
+  background: rgba(34, 211, 238, 0.1) !important;
+  color: #22d3ee !important;
+  border: 1px solid rgba(34, 211, 238, 0.2) !important;
+}
+
+.clean .make-button:hover,
+.clean [data-testid^="make-"]:hover {
+  background: rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Commit button styling */
+.clean [data-testid^="commit-"] {
+  background: #22d3ee !important;
+  color: #0b101a !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Brand section */
+.clean .brand-icon-box {
+  background: rgba(34, 211, 238, 0.1) !important;
+  padding: 6px !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(34, 211, 238, 0.3) !important;
+}
+
+/* Sidebar top action buttons */
+.clean .sidebar-action-btn {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  padding: 8px !important;
+  border-radius: 0.75rem !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+}
+
+.clean .sidebar-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Header styling - exact match */
+.clean header,
+.clean .header-container {
+  height: 4rem !important;
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  background: rgba(11, 16, 26, 0.4) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Header title styling */
+.clean .header-title {
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Header subtitle (project name) */
+.clean .header-subtitle {
+  font-size: 10px !important;
+  color: #64748b !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.2em !important;
+  font-weight: 700 !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* ADD FEATURE button */
+.clean .add-feature-btn,
+.clean [data-testid="add-feature-button"] {
+  background: #22d3ee !important;
+  color: #0b101a !important;
+  font-weight: 900 !important;
+  padding: 8px 24px !important;
+  border-radius: 0.75rem !important;
+  font-size: 12px !important;
+  box-shadow: 0 4px 16px rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Search bar */
+.clean .search-bar {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
+}
+
+.clean .search-bar input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 1rem !important;
+  padding: 0.625rem 3rem !important;
+  font-size: 14px !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+.clean .search-bar input:focus {
+  border-color: rgba(34, 211, 238, 0.5) !important;
+  outline: none !important;
+}
+
+/* Kanban board container */
+.clean .kanban-container {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  padding-bottom: 2rem !important;
+  gap: 1.5rem !important;
+}
+
+/* Backlog column - no special styling, just glass */
+.clean [data-column-id="backlog"] {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Card hover trash icon */
+.clean .kanban-card .delete-icon {
+  opacity: 0.3 !important;
+  transition: opacity 0.2s !important;
+}
+
+.clean .kanban-card:hover .delete-icon {
+  opacity: 1 !important;
+}
+
+/* Waiting approval card action icons */
+.clean .waiting-card-actions {
+  opacity: 0.3 !important;
+  transition: opacity 0.2s !important;
+}
+
+.clean .kanban-card:hover .waiting-card-actions {
+  opacity: 1 !important;
+}
+
+/* ================================================
+   PRISM BACKGROUND - Rainbow gradient effect
+   ================================================ */
+
+/* Hidden by default for all themes */
+/* Hide the div-based prism-bg (we use pseudo-element instead) */
+.prism-bg {
+  display: none !important;
+}
+
+/* ================================================
+   CLEAN THEME - Rainbow Prism Background Effect
+   EXACT copy from HTML mockup
+   ================================================ */
+html.clean::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+      circle at 10% 20%,
+      rgba(34, 211, 238, 0.1) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(139, 92, 246, 0.08) 0%,
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(245, 158, 11, 0.04) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 0, 0, 0.02) 0%,
+      rgba(0, 255, 255, 0.02) 50%,
+      rgba(0, 0, 255, 0.02) 100%
+    );
+  filter: blur(80px);
+}
+
+/* Clean theme body background */
+.clean {
+  background-color: #0b101a !important;
+}
+
+/* ================================================
+   CLEAN THEME - EXACT 1:1 MATCH FROM HTML MOCKUP
+   Font, spacing, sizing - everything matched exactly
+   ================================================ */
+
+/* Override Geist fonts with Inter/JetBrains at the root level */
+html.clean,
+html.clean body,
+.clean {
+  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif !important;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace,
+    SFMono-Regular, monospace !important;
+  --font-geist-sans: var(--font-inter), "Inter", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  --font-geist-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace,
+    SFMono-Regular, monospace !important;
+}
+
+/* Font Family - Inter for body, JetBrains Mono for mono */
+/* Apply to ALL elements with the universal selector */
+.clean,
+.clean *,
+.clean body,
+.clean body *,
+html.clean,
+html.clean *,
+html.clean body,
+html.clean body * {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif !important;
+}
+
+/* Base text color for clean theme */
+.clean,
+.clean body {
+  color: #e2e8f0 !important;
+}
+
+/* Mono class - JetBrains Mono - must override the universal selector */
+.clean .mono,
+.clean .mono *,
+.clean .font-mono,
+.clean .font-mono *,
+.clean code,
+.clean code *,
+.clean pre,
+.clean pre *,
+.clean [class*="Mono"],
+.clean [class*="mono"],
+.clean .tabular-nums {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace !important;
+}
+
+/* Force Inter on ALL form elements, buttons, inputs - these often have their own font rules */
+.clean button,
+.clean button *,
+.clean input,
+.clean textarea,
+.clean select,
+.clean option,
+.clean label,
+.clean a,
+.clean span,
+.clean div,
+.clean p,
+.clean h1,
+.clean h2,
+.clean h3,
+.clean h4,
+.clean h5,
+.clean h6,
+.clean li,
+.clean td,
+.clean th {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif !important;
+}
+
+/* Re-apply mono to elements that should use it */
+.clean button.mono,
+.clean button.font-mono,
+.clean span.mono,
+.clean span.font-mono,
+.clean div.mono,
+.clean div.font-mono,
+.clean p.mono,
+.clean p.font-mono,
+.clean .tabular-nums,
+.clean [data-slot="badge"] .tabular-nums {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace !important;
+}
+
+/* Sidebar specific font rules */
+.clean [data-testid="sidebar"],
+.clean [data-testid="sidebar"] *,
+.clean .sidebar-glass,
+.clean .sidebar-glass *,
+.clean aside,
+.clean aside * {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif !important;
+}
+
+/* Sidebar shortcut badges should use mono */
+.clean [data-testid="sidebar"] .shortcut-badge,
+.clean [data-testid="sidebar"] .font-mono,
+.clean [data-testid="sidebar"] [class*="mono"] {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace !important;
+}
+
+/* Portaled elements (dialogs, dropdowns, popovers) - must target body-level portals */
+html.clean [data-radix-popper-content-wrapper],
+html.clean [data-radix-popper-content-wrapper] *,
+html.clean [role="dialog"],
+html.clean [role="dialog"] *,
+html.clean [role="menu"],
+html.clean [role="menu"] *,
+html.clean [role="listbox"],
+html.clean [role="listbox"] *,
+html.clean [data-state="open"],
+html.clean [data-state="open"] * {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif !important;
+}
+
+/* Portaled mono elements */
+html.clean [data-radix-popper-content-wrapper] .mono,
+html.clean [data-radix-popper-content-wrapper] .font-mono,
+html.clean [data-radix-popper-content-wrapper] code,
+html.clean [role="dialog"] .mono,
+html.clean [role="dialog"] .font-mono,
+html.clean [role="dialog"] code,
+html.clean [role="menu"] .mono,
+html.clean [role="menu"] .font-mono {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace !important;
+}
+
+/* ================================================
+   CLEAN THEME TYPOGRAPHY - Exact 1:1 from HTML mock
+   All font sizes, weights, spacing matched exactly
+   ================================================ */
+
+/* Brand text - text-xl font-bold tracking-tighter text-white */
+.clean .brand-text,
+.clean [data-testid="brand-name"] {
+  font-size: 1.25rem !important; /* text-xl = 20px */
+  font-weight: 700 !important; /* font-bold */
+  letter-spacing: -0.05em !important; /* tracking-tighter */
+  color: #ffffff !important;
+}
+
+/* Section headers (sidebar) - text-[10px] font-black text-slate-600 uppercase tracking-[0.2em] */
+.clean .section-header,
+.clean [data-testid="sidebar"] p[class*="uppercase"],
+.clean aside p[class*="uppercase"] {
+  font-size: 10px !important;
+  font-weight: 900 !important; /* font-black */
+  text-transform: uppercase !important;
+  letter-spacing: 0.2em !important;
+  color: #475569 !important; /* text-slate-600 */
+}
+
+/* Nav links - text-sm font-medium */
+.clean nav a,
+.clean [data-testid="sidebar"] a {
+  font-size: 0.875rem !important; /* text-sm = 14px */
+  font-weight: 500 !important; /* font-medium */
+}
+
+/* Nav active link - text-white */
+.clean .nav-active,
+.clean nav a[aria-current="page"] {
+  color: #ffffff !important;
+}
+
+/* Page title (header) - text-lg font-bold text-white tracking-tight */
+.clean header h1,
+.clean header h2,
+.clean .header-title,
+.clean [data-testid="board-view"] h1 {
+  font-size: 1.125rem !important; /* text-lg = 18px */
+  font-weight: 700 !important; /* font-bold */
+  letter-spacing: -0.025em !important; /* tracking-tight */
+  color: #ffffff !important;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif !important;
+}
+
+/* Page subtitle - text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold mono */
+.clean header p,
+.clean .header-subtitle {
+  font-size: 10px !important;
+  font-weight: 700 !important; /* font-bold */
+  text-transform: uppercase !important;
+  letter-spacing: 0.2em !important;
+  color: #64748b !important; /* text-slate-500 */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* Shortcut badges - 9px font-mono font-semibold */
+.clean .shortcut-badge,
+.clean [class*="shortcut"],
+.clean kbd {
+  font-size: 9px !important;
+  font-weight: 600 !important; /* font-semibold */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  padding: 1px 5px !important;
+  border-radius: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Running badge - text-[9px] font-black mono */
+.clean .running-badge,
+.clean .kanban-card .absolute.top-2.right-2 > div:first-child {
+  font-size: 9px !important;
+  font-weight: 900 !important; /* font-black */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* Timer display - text-[9px] font-mono */
+.clean .timer-display {
+  font-size: 9px !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+}
+
+/* More/Less toggle - text-[10px] text-slate-500 */
+.clean .kanban-card button[data-testid^="toggle-description-"] {
+  font-size: 10px !important;
+  color: #64748b !important; /* text-slate-500 */
+}
+
+.clean .kanban-card button[data-testid^="toggle-description-"]:hover {
+  color: #cbd5e1 !important; /* hover:text-slate-300 */
+}
+
+/* ================================================
+   KANBAN BOARD LAYOUT - Exact spacing from HTML
+   ================================================ */
+
+/* Board container - px-8 pb-8 (32px padding) */
+.clean .kanban-board,
+.clean [data-testid="kanban-board"],
+.clean .overflow-x-auto {
+  padding-left: 2rem !important;
+  padding-right: 2rem !important;
+  padding-bottom: 2rem !important;
+}
+
+/* Column container - gap-6 (24px) between columns */
+.clean .kanban-board > div,
+.clean [data-testid="kanban-board"] > div,
+.clean .overflow-x-auto > div {
+  gap: 1.5rem !important;
+}
+
+/* ================================================
+   KANBAN COLUMN - w-80 (320px), exact styling
+   ================================================ */
+
+/* Column width - w-80 = 320px (20rem) */
+.clean [data-testid^="kanban-column-"],
+.clean .kanban-column {
+  width: 20rem !important;
+  min-width: 20rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.25rem !important; /* gap-5 = 20px */
+  height: 100% !important;
+}
+
+/* Remove base rounded/border styling for all columns in clean theme */
+.clean [data-testid^="kanban-column-"] {
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+/* Backlog column background layer - hide it completely */
+.clean [data-testid="kanban-column-backlog"] > .absolute.inset-0 {
+  display: none !important;
+}
+
+/* Other columns background layer - rounded-[2.5rem] to match column styling */
+.clean [data-testid="kanban-column-in_progress"] > .absolute.inset-0,
+.clean [data-testid="kanban-column-waiting_approval"] > .absolute.inset-0,
+.clean [data-testid="kanban-column-verified"] > .absolute.inset-0 {
+  border-radius: 2.5rem !important;
+}
+
+/* Drop zone indicator for non-backlog columns - rounded to match */
+.clean [data-testid="kanban-column-in_progress"] > .absolute.inset-0.bg-primary\/5,
+.clean [data-testid="kanban-column-waiting_approval"] > .absolute.inset-0.bg-primary\/5,
+.clean [data-testid="kanban-column-verified"] > .absolute.inset-0.bg-primary\/5 {
+  border-radius: 2.5rem !important;
+}
+
+/* Column content area - space-y-4 (16px between cards) */
+.clean [data-testid^="kanban-column-"] > div:last-child,
+.clean .kanban-column > .flex-1 {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important; /* space-y-4 = 16px */
+  overflow-y: auto !important;
+}
+
+/* ================================================
+   COLUMN HEADER - Exact styling from HTML
+   ================================================ */
+
+/* Column header container */
+.clean [data-testid^="kanban-column-"] > div:first-child {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 0.5rem !important;
+  flex-shrink: 0 !important;
+  border: none !important;
+}
+
+/* Backlog header - no border bottom (matches HTML: px-2 shrink-0, no border) */
+.clean [data-testid="kanban-column-backlog"] > div:first-child {
+  border-bottom: none !important;
+}
+
+/* Column header title - text-[11px] font-black uppercase tracking-widest */
+.clean [data-testid^="kanban-column-"] h3,
+.clean .kanban-column h3,
+.clean .column-header-title {
+  font-size: 11px !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Backlog column header color */
+.clean [data-testid="kanban-column-backlog"] h3 {
+  color: #94a3b8 !important; /* text-slate-400 */
+}
+
+/* In Progress column header color */
+.clean [data-testid="kanban-column-in_progress"] h3 {
+  color: #e2e8f0 !important; /* text-slate-200 */
+}
+
+/* Waiting Approval column header color */
+.clean [data-testid="kanban-column-waiting_approval"] h3 {
+  color: #cbd5e1 !important; /* text-slate-300 */
+}
+
+/* Verified column header color */
+.clean [data-testid="kanban-column-verified"] h3 {
+  color: #cbd5e1 !important; /* text-slate-300 */
+}
+
+/* ================================================
+   COUNT BADGES - mono text-[10px] exact styling
+   ================================================ */
+
+/* Default count badge - bg-white/5 text-slate-500 */
+.clean [data-testid^="kanban-column-"] span[class*="tabular"],
+.clean .column-count {
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  font-size: 10px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  padding: 2px 10px !important;
+  border-radius: 9999px !important;
+  color: #64748b !important; /* text-slate-500 */
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+/* In Progress count - cyan */
+.clean [data-testid="kanban-column-in_progress"] span[class*="tabular"] {
+  background: rgba(34, 211, 238, 0.1) !important;
+  color: #22d3ee !important;
+  border: 1px solid rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Verified count - green */
+.clean [data-testid="kanban-column-verified"] span[class*="tabular"] {
+  background: rgba(16, 185, 129, 0.1) !important;
+  color: #10b981 !important;
+  border: 1px solid rgba(16, 185, 129, 0.2) !important;
+}
+
+/* ================================================
+   KANBAN CARD - Exact 1:1 styling from HTML mockup
+   HTML: glass kanban-card flex flex-col gap-4 group relative
+   ================================================ */
+
+/* Card base - flex flex-col gap-4 (16px) */
+.clean .kanban-card,
+.clean [data-testid^="kanban-card-"] {
+  border-radius: 1.5rem !important; /* --card-radius: 1.5rem */
+  padding: 1.5rem !important; /* padding: 1.5rem (24px) */
+  background: rgba(255, 255, 255, 0.03) !important; /* var(--glass-bg) */
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important; /* var(--glass-border) */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important; /* gap-4 = 16px - THIS IS THE KEY */
+  overflow: visible !important; /* Allow absolute elements to show */
+}
+
+/* Card hover effect - exactly from HTML */
+.clean .kanban-card:hover,
+.clean [data-testid^="kanban-card-"]:hover {
+  transform: translateY(-3px) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Card header - remove default padding, no margin needed (gap handles it) */
+.clean .kanban-card [class*="CardHeader"],
+.clean [data-testid^="kanban-card-"] [class*="CardHeader"] {
+  padding: 0 !important;
+  padding-top: 0 !important;
+  margin: 0 !important;
+  display: block !important;
+}
+
+/* Card content - use flex column with gap-4 for internal spacing */
+.clean .kanban-card [data-slot="card-content"],
+.clean [data-testid^="kanban-card-"] [data-slot="card-content"] {
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important; /* gap-4 = 16px between model badge and buttons */
+}
+
+/* Hide drag handle in clean theme */
+.clean .kanban-card [data-testid^="drag-handle-"] {
+  display: none !important;
+}
+
+/* Remove drag handle gap from title container */
+.clean .kanban-card [class*="CardHeader"] > div.flex {
+  gap: 0 !important;
+}
+
+/* Remove extra top padding from CardHeader that was added for badges */
+.clean .kanban-card [class*="CardHeader"].pt-12,
+.clean .kanban-card [class*="CardHeader"].pt-10 {
+  padding-top: 0 !important;
+}
+
+/* ================================================
+   CARD TEXT - Exact styling from HTML mockup
+   ================================================ */
+
+/* Card title/description - text-[13px] text-slate-300 leading-relaxed font-medium line-clamp-3 */
+.clean .kanban-card [class*="CardTitle"],
+.clean [data-testid^="kanban-card-"] [class*="CardTitle"] {
+  font-size: 13px !important;
+  color: #cbd5e1 !important; /* text-slate-300 */
+  line-height: 1.625 !important; /* leading-relaxed */
+  font-weight: 500 !important; /* font-medium */
+  margin: 0 !important;
+}
+
+/* Active/running card text - text-white font-semibold */
+.clean .kanban-card.is-running [class*="CardTitle"],
+.clean .kanban-card-active [class*="CardTitle"] {
+  color: #ffffff !important;
+  font-weight: 600 !important; /* font-semibold */
+}
+
+/* Waiting approval card text - italic */
+.clean
+  [data-testid="kanban-column-waiting_approval"]
+  .kanban-card
+  [class*="CardTitle"] {
+  font-style: italic !important;
+}
+
+/* Card category/model badge - text-[10px] font-bold text-cyan-400/80 mono uppercase */
+.clean .kanban-card [class*="CardDescription"],
+.clean [data-testid^="kanban-card-"] [class*="CardDescription"] {
+  font-size: 10px !important;
+  font-weight: 700 !important; /* font-bold */
+  color: rgba(34, 211, 238, 0.8) !important; /* text-cyan-400/80 */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.025em !important; /* tracking-tight */
+  margin-top: 1rem !important; /* gap-4 spacing */
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.375rem !important; /* gap-1.5 */
+}
+
+/* More/Less button - text-[10px] text-slate-500 -mt-1 */
+.clean .kanban-card button[data-testid^="toggle-description-"] {
+  font-size: 10px !important;
+  color: #64748b !important; /* text-slate-500 */
+  margin-top: -0.25rem !important; /* -mt-1 equivalent */
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important; /* gap-1 */
+}
+
+.clean .kanban-card button[data-testid^="toggle-description-"]:hover {
+  color: #cbd5e1 !important; /* hover:text-slate-300 */
+  background: transparent !important;
+}
+
+/* ================================================
+   MODEL BADGE - Exact styling from HTML mockup
+   text-[10px] font-bold text-cyan-400/80 mono flex items-center gap-1.5 uppercase tracking-tight
+   ================================================ */
+
+/* Force model info section to always display in clean theme */
+.clean .kanban-card [data-slot="card-content"] > .mb-3.space-y-2,
+.clean
+  .kanban-card
+  [data-slot="card-content"]
+  > .mb-3.space-y-2.overflow-hidden,
+.clean
+  .kanban-card
+  [data-slot="card-content"]
+  > div.mb-3:has(.text-\[var\(--status-info\)\]) {
+  display: block !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Style the model info container - matches HTML: text-[10px] font-bold text-cyan-400/80 mono uppercase */
+.clean .kanban-card .space-y-2 > .flex.items-center.gap-2,
+.clean
+  .kanban-card
+  [data-slot="card-content"]
+  .flex.items-center.gap-2:has(.text-\[var\(--status-info\)\]) {
+  font-size: 10px !important;
+  font-weight: 700 !important; /* font-bold */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.025em !important; /* tracking-tight */
+  gap: 0.375rem !important; /* gap-1.5 */
+  flex-wrap: nowrap !important;
+}
+
+/* Model name with icon - cyan styling */
+.clean .kanban-card .text-\[var\(--status-info\)\] {
+  color: rgba(34, 211, 238, 0.8) !important; /* text-cyan-400/80 */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.375rem !important; /* gap-1.5 */
+}
+
+/* Model icon - w-3.5 h-3.5 like HTML */
+.clean .kanban-card .text-\[var\(--status-info\)\] svg {
+  width: 14px !important; /* w-3.5 */
+  height: 14px !important;
+}
+
+/* Model name text */
+.clean .kanban-card .text-\[var\(--status-info\)\] span {
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+}
+
+/* Thinking level badge - purple */
+.clean .kanban-card .text-purple-400 {
+  color: #a78bfa !important;
+  font-family: "JetBrains Mono", ui-monospace, monospace !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+}
+
+/* Hide category CardDescription in clean theme - we show model badge instead */
+.clean .kanban-card [class*="CardDescription"] {
+  display: none !important;
+}
+
+/* Model badge container - clean margins for gap-based layout */
+.clean .kanban-card .space-y-2 {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Model badge inner content */
+.clean .kanban-card .space-y-2 > * {
+  margin: 0 !important;
+}
+
+/* Hide agent phase badges in clean theme for cleaner look */
+.clean .kanban-card .px-1\.5.py-0\.5.rounded-md {
+  display: none !important;
+}
+
+/* Hide todo list progress in clean theme */
+.clean .kanban-card .space-y-1 {
+  display: none !important;
+}
+
+/* Hide branch display in clean theme */
+.clean .kanban-card .mb-2.flex.items-center.gap-1\.5 {
+  display: none !important;
+}
+
+/* Reset mb-3 class - let flexbox gap handle spacing */
+.clean .kanban-card .mb-3 {
+  margin-bottom: 0 !important;
+}
+
+/* Reset overflow-hidden on model container */
+.clean .kanban-card .mb-3.space-y-2.overflow-hidden {
+  overflow: visible !important;
+}
+
+/* ================================================
+   ICON BUTTONS - Top right action icons
+   HTML: absolute top-5 right-6 opacity-0 group-hover:opacity-100
+   The delete button is inside a wrapper div, so we style the wrapper
+   ================================================ */
+
+/* Delete button WRAPPER - position at bottom right, hidden until hover */
+.clean .kanban-card .absolute.bottom-1.right-2 {
+  position: absolute !important;
+  bottom: 0.75rem !important; /* bottom-3 = 12px */
+  right: 0.75rem !important; /* right-3 = 12px */
+  top: auto !important;
+  left: auto !important;
+  opacity: 0 !important; /* Hidden until hover */
+  transition: opacity 0.2s ease !important;
+  z-index: 30 !important;
+}
+
+/* Show delete button on card hover */
+.clean .kanban-card:hover .absolute.bottom-1.right-2 {
+  opacity: 1 !important;
+}
+
+/* Delete button itself - transparent background, no padding */
+/* Delete button itself - completely transparent, no box styling */
+.clean .kanban-card button[data-testid^="delete-"],
+.clean .kanban-card button[data-testid^="delete-"]:hover,
+.clean .kanban-card button[data-testid^="delete-"]:focus,
+.clean .kanban-card button[data-testid^="delete-"]:active {
+  background: transparent !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  height: auto !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Delete icon styling */
+.clean .kanban-card button[data-testid^="delete-"] svg {
+  width: 1rem !important; /* w-4 */
+  height: 1rem !important; /* h-4 */
+  color: #475569 !important; /* text-slate-600 */
+  transition: color 0.2s ease !important;
+}
+
+/* Delete icon hover - red */
+.clean .kanban-card button[data-testid^="delete-"]:hover svg {
+  color: #f87171 !important; /* hover:text-red-400 */
+}
+
+/* Waiting/Verified cards - edit/logs icons at top right */
+.clean
+  [data-testid="kanban-column-waiting_approval"]
+  .kanban-card
+  .absolute.top-2.right-2,
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card
+  .absolute.top-2.right-2 {
+  position: absolute !important;
+  top: 1.25rem !important;
+  right: 1.5rem !important;
+  opacity: 0.3 !important;
+  transition: opacity 0.2s ease !important;
+  display: flex !important;
+  gap: 0.5rem !important;
+  z-index: 10 !important;
+}
+
+/* Show action icons on hover */
+.clean
+  [data-testid="kanban-column-waiting_approval"]
+  .kanban-card:hover
+  .absolute.top-2.right-2,
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card:hover
+  .absolute.top-2.right-2 {
+  opacity: 1 !important;
+}
+
+/* Verified card action icons - lower opacity */
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card
+  .absolute.top-2.right-2 {
+  opacity: 0.2 !important;
+}
+
+/* In-progress card - menu button at top right */
+.clean
+  [data-testid="kanban-column-in_progress"]
+  .kanban-card
+  .absolute.top-2.right-2 {
+  position: absolute !important;
+  top: 1.25rem !important;
+  right: 1.5rem !important;
+  z-index: 10 !important;
+}
+
+/* Hide summary section on waiting approval cards */
+.clean [data-testid="kanban-column-waiting_approval"] .kanban-card .border-t,
+.clean
+  [data-testid="kanban-column-waiting_approval"]
+  .kanban-card
+  [class*="border-t"] {
+  display: none !important;
+}
+
+/* Hide summary dialog trigger and content */
+.clean .kanban-card .border-t.border-border\/30 {
+  display: none !important;
+}
+
+/* ================================================
+   CARD BUTTONS - Exact 1:1 styling from HTML mockup
+   ================================================ */
+
+/* Action buttons container - flex gap-2 (NO extra margin, gap handles spacing) */
+.clean .kanban-card [data-slot="card-content"] > div:last-child {
+  display: flex !important;
+  gap: 0.5rem !important; /* gap-2 = 8px */
+  margin: 0 !important; /* Card's gap-4 handles the spacing */
+}
+
+/* Waiting/Verified cards have gap-2.5 */
+.clean
+  [data-testid="kanban-column-waiting_approval"]
+  .kanban-card
+  [data-slot="card-content"]
+  > div:last-child,
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card
+  [data-slot="card-content"]
+  > div:last-child {
+  gap: 0.625rem !important; /* gap-2.5 = 10px */
+}
+
+/* Base button styling - py-2.5 rounded-xl text-[11px] font-bold flex items-center justify-center gap-2 */
+.clean .kanban-card [data-slot="card-content"] button {
+  padding: 0.625rem 1rem !important; /* py-2.5 px-4 */
+  border-radius: 0.75rem !important; /* rounded-xl */
+  font-size: 11px !important;
+  font-weight: 700 !important; /* font-bold */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.5rem !important; /* gap-2 */
+  flex: 1 !important;
+  transition: all 0.2s !important;
+}
+
+/* In progress/Running cards have py-3 buttons */
+.clean
+  [data-testid="kanban-column-in_progress"]
+  .kanban-card
+  [data-slot="card-content"]
+  button {
+  padding-top: 0.75rem !important; /* py-3 */
+  padding-bottom: 0.75rem !important;
+}
+
+/* Waiting/Verified cards have py-3 buttons */
+.clean
+  [data-testid="kanban-column-waiting_approval"]
+  .kanban-card
+  [data-slot="card-content"]
+  button,
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card
+  [data-slot="card-content"]
+  button {
+  padding-top: 0.75rem !important; /* py-3 */
+  padding-bottom: 0.75rem !important;
+}
+
+/* Edit button - glass style (backlog) */
+.clean .kanban-card button[data-testid^="edit-backlog-"] {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  color: #e2e8f0 !important;
+}
+
+.clean .kanban-card button[data-testid^="edit-backlog-"]:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Make button - cyan variant bg-cyan-500/10 text-cyan-400 border-cyan-500/20 */
+.clean .kanban-card button[data-testid^="make-"] {
+  background: rgba(34, 211, 238, 0.1) !important;
+  color: #22d3ee !important;
+  border: 1px solid rgba(34, 211, 238, 0.2) !important;
+}
+
+.clean .kanban-card button[data-testid^="make-"]:hover {
+  background: rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Logs button - running state: btn-cyan flex-[4] font-black tracking-widest */
+.clean .kanban-card.is-running button[data-testid^="view-output-"] {
+  background: #22d3ee !important;
+  color: #0b101a !important;
+  font-weight: 900 !important; /* font-black */
+  flex: 4 !important; /* flex-[4] */
+  letter-spacing: 0.1em !important; /* tracking-widest */
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 16px rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Logs button - non-running in-progress state */
+.clean
+  [data-testid="kanban-column-in_progress"]
+  .kanban-card:not(.is-running)
+  button[data-testid^="view-output-"] {
+  background: rgba(34, 211, 238, 0.15) !important;
+  color: #22d3ee !important;
+  border: 1px solid rgba(34, 211, 238, 0.2) !important;
+  flex: 4 !important;
+}
+
+/* Logs button - verified state: glass with text-slate-500 */
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card
+  button[data-testid^="view-output-"] {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #64748b !important; /* text-slate-500 */
+  flex: none !important;
+  padding-left: 1.75rem !important; /* px-7 */
+  padding-right: 1.75rem !important;
+}
+
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card
+  button[data-testid^="view-output-"]:hover {
+  color: #cbd5e1 !important; /* hover:text-slate-300 */
+}
+
+/* Stop button - solid rose/red flex-1 */
+.clean .kanban-card button[data-testid^="force-stop-"] {
+  background: #ef4444 !important; /* bg-rose-500 */
+  color: #fff !important;
+  flex: 1 !important;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.2) !important;
+}
+
+.clean .kanban-card button[data-testid^="force-stop-"]:hover {
+  background: #dc2626 !important; /* hover:bg-rose-600 */
+}
+
+/* Stop button - muted state (non-running) */
+.clean
+  [data-testid="kanban-column-in_progress"]
+  .kanban-card:not(.is-running)
+  button[data-testid^="force-stop-"] {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: rgba(239, 68, 68, 0.5) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  box-shadow: none !important;
+}
+
+/* Refine button - glass border-white/10 (waiting approval) */
+.clean .kanban-card button[data-testid^="follow-up-"] {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #e2e8f0 !important;
+}
+
+.clean .kanban-card button[data-testid^="follow-up-"]:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Commit button - btn-cyan font-black tracking-widest */
+.clean .kanban-card button[data-testid^="commit-"] {
+  background: #22d3ee !important;
+  color: #0b101a !important;
+  font-weight: 900 !important; /* font-black */
+  letter-spacing: 0.1em !important; /* tracking-widest */
+  text-transform: uppercase !important;
+  box-shadow: 0 4px 16px rgba(34, 211, 238, 0.2) !important;
+}
+
+/* Complete button - emerald variant font-black tracking-widest */
+.clean .kanban-card button[data-testid^="complete-"] {
+  background: rgba(16, 185, 129, 0.15) !important; /* bg-emerald-500/15 */
+  color: #10b981 !important; /* text-emerald-400 */
+  border: 1px solid rgba(16, 185, 129, 0.2) !important; /* border-emerald-500/20 */
+  font-weight: 900 !important; /* font-black */
+  letter-spacing: 0.1em !important; /* tracking-widest */
+  text-transform: uppercase !important;
+}
+
+/* Resume/Verify buttons - green variant */
+.clean .kanban-card button[data-testid^="resume-"],
+.clean .kanban-card button[data-testid^="verify-"],
+.clean .kanban-card button[data-testid^="manual-verify-"] {
+  background: #10b981 !important;
+  color: #0b101a !important;
+  font-weight: 700 !important;
+}
+
+.clean .kanban-card button[data-testid^="resume-"]:hover,
+.clean .kanban-card button[data-testid^="verify-"]:hover,
+.clean .kanban-card button[data-testid^="manual-verify-"]:hover {
+  background: #059669 !important;
+}
+
+/* ================================================
+   RUNNING CARD INDICATOR - Orange badge at top right
+   Matches HTML: flex justify-end items-center gap-2
+   ================================================ */
+
+/* Running card - cyan border and background tint */
+.clean .kanban-card.is-running,
+.clean .kanban-card-active {
+  border-color: rgba(34, 211, 238, 0.4) !important; /* border-cyan-500/40 */
+  background: rgba(34, 211, 238, 0.08) !important; /* bg-cyan-500/[0.08] */
+}
+
+/* Running indicator container at top of card */
+/* HTML: <div class="flex justify-end items-center gap-2"> */
+.clean .kanban-card .absolute.top-2.right-2 {
+  position: static !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 0.5rem !important; /* gap-2 */
+  margin-bottom: 1rem !important; /* Space before description */
+  order: -1 !important; /* Move to top of card */
+}
+
+/* Running indicator badge - ORANGE variant like HTML */
+/* bg-orange-500/15 text-orange-400 text-[9px] px-2.5 py-1 rounded-lg border border-orange-500/20 font-black mono */
+.clean .kanban-card .absolute.top-2.right-2 > div,
+.clean .kanban-card .absolute.top-2.right-2 {
+  background: transparent !important;
+}
+
+.clean .kanban-card .absolute.top-2.right-2 > div:first-child {
+  background: rgba(245, 158, 11, 0.15) !important; /* bg-orange-500/15 */
+  color: #fb923c !important; /* text-orange-400 */
+  font-size: 9px !important; /* text-[9px] */
+  padding: 4px 10px !important; /* px-2.5 py-1 */
+  border-radius: 8px !important; /* rounded-lg */
+  border: 1px solid rgba(245, 158, 11, 0.2) !important; /* border-orange-500/20 */
+  font-weight: 900 !important; /* font-black */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important; /* mono */
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.375rem !important; /* gap-1.5 */
+}
+
+/* Override the cyan color in running badge - make it ORANGE */
+.clean
+  .kanban-card
+  .absolute.top-2.right-2
+  .text-\[var\(--status-in-progress\)\],
+.clean .kanban-card .absolute.top-2.right-2 span[class*="text-"] {
+  color: #fb923c !important; /* text-orange-400 */
+}
+
+/* Loader/spinner icon - orange and smaller */
+.clean .kanban-card .absolute.top-2.right-2 svg.animate-spin {
+  width: 12px !important; /* w-3 */
+  height: 12px !important;
+  color: #fb923c !important; /* text-orange-400 */
+}
+
+/* Timer/CountUpTimer - bg-slate-900/50 text-slate-500 text-[9px] */
+/* Only target CountUpTimer explicitly, NOT sibling divs which include the trash icon wrapper */
+.clean .kanban-card [class*="CountUpTimer"] {
+  background: rgba(15, 23, 42, 0.5) !important; /* bg-slate-900/50 */
+  color: #64748b !important; /* text-slate-500 */
+  font-size: 9px !important; /* text-[9px] */
+  padding: 4px 8px !important; /* px-2 py-1 */
+  border-radius: 8px !important; /* rounded-lg */
+  border: 1px solid rgba(255, 255, 255, 0.05) !important; /* border-white/5 */
+  font-family: "JetBrains Mono", ui-monospace, monospace !important; /* font-mono */
+}
+
+/* ================================================
+   VERIFIED CARD - Reduced opacity, strikethrough
+   ================================================ */
+
+.clean [data-testid="kanban-column-verified"] .kanban-card {
+  opacity: 0.6 !important;
+}
+
+.clean [data-testid="kanban-column-verified"] .kanban-card:hover {
+  opacity: 1 !important;
+}
+
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card
+  [class*="CardTitle"] {
+  text-decoration: line-through !important;
+  text-decoration-color: #475569 !important;
+  color: #94a3b8 !important; /* text-slate-400 */
+}
+
+.clean body,
+.clean main,
+.clean [data-testid="app-container"] {
+  background-color: #0b101a !important;
+}
+
+/* Make content-bg transparent in clean theme so prism shows through */
+.clean .content-bg {
+  background: transparent !important;
+  background-image: none !important;
+}
+
+/* ================================================
+   CLEAN THEME - Additional card element styling
+   ================================================ */
+
+/* Priority badges - compact styling for clean theme */
+.clean .kanban-card [data-testid^="priority-badge-"] {
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+  border-radius: 6px !important;
+  font-weight: 700 !important;
+  min-width: auto !important;
+  height: auto !important;
+}
+
+/* Skip tests badge - compact */
+.clean .kanban-card [data-testid^="skip-tests-badge-"] {
+  font-size: 11px !important;
+  padding: 2px 8px !important;
+  border-radius: 6px !important;
+  height: auto !important;
+  min-width: auto !important;
+}
+
+/* Error badge - compact */
+.clean .kanban-card [data-testid^="error-badge-"] {
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+  border-radius: 6px !important;
+}
+
+/* Steps preview - smaller and more compact */
+.clean .kanban-card .space-y-1\.5 {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0 !important;
+}
+
+.clean .kanban-card .space-y-1\.5 > div {
+  font-size: 10px !important;
+  color: rgba(203, 213, 225, 0.6) !important; /* text-slate-300/60 */
+}
+
+/* Agent info panel - subtle styling */
+.clean .kanban-card .space-y-2 {
+  margin-top: 0.75rem !important;
+}
+
+/* Hide branch display in clean theme for cleaner look */
+.clean .kanban-card .font-mono.truncate {
+  font-size: 10px !important;
+  color: #64748b !important;
+}
+
+/* Summary section in waiting/verified cards */
+.clean .kanban-card .border-t.border-border\/30 {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+  padding-top: 0.75rem !important;
+  margin-top: 0.75rem !important;
+}
+
+/* Custom scrollbar for clean theme - thinner and subtle */
+.clean ::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+.clean ::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.clean ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px !important;
+}
+
+.clean ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Icon sizes in buttons - w-3.5 h-3.5 for backlog, w-4 h-4 for others */
+.clean [data-testid="kanban-column-backlog"] .kanban-card button svg {
+  width: 14px !important; /* w-3.5 */
+  height: 14px !important;
+}
+
+.clean
+  [data-testid="kanban-column-in_progress"]
+  .kanban-card
+  [data-slot="card-content"]
+  button
+  svg,
+.clean
+  [data-testid="kanban-column-waiting_approval"]
+  .kanban-card
+  [data-slot="card-content"]
+  button
+  svg,
+.clean
+  [data-testid="kanban-column-verified"]
+  .kanban-card
+  [data-slot="card-content"]
+  button
+  svg {
+  width: 16px !important; /* w-4 */
+  height: 16px !important;
+}
+
+/* Running card logs button - thicker stroke for icon */
+.clean .kanban-card.is-running button[data-testid^="view-output-"] svg {
+  stroke-width: 2.5px !important;
+}
+
+/* Commit button icon - thicker stroke */
+.clean .kanban-card button[data-testid^="commit-"] svg {
+  stroke-width: 2.5px !important;
+}
+
+/* Complete button icon - thicker stroke */
+.clean .kanban-card button[data-testid^="complete-"] svg {
+  stroke-width: 2.5px !important;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -1479,6 +3504,21 @@
   body {
     @apply bg-background text-foreground;
     background-color: var(--background);
+  }
+
+  /* Clean theme font override at base layer */
+  html.clean,
+  html.clean body,
+  html.clean body * {
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      sans-serif !important;
+  }
+  html.clean .mono,
+  html.clean .font-mono,
+  html.clean code,
+  html.clean pre,
+  html.clean .tabular-nums {
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace !important;
   }
 
   /* Ensure all clickable elements show pointer cursor */
@@ -1504,12 +3544,46 @@
 }
 
 /* Custom scrollbar for dark themes */
-:is(.dark, .retro, .dracula, .nord, .monokai, .tokyonight, .solarized, .gruvbox, .catppuccin, .onedark, .synthwave, .red, .sunset, .gray) ::-webkit-scrollbar {
+:is(
+    .dark,
+    .retro,
+    .dracula,
+    .nord,
+    .monokai,
+    .tokyonight,
+    .solarized,
+    .gruvbox,
+    .catppuccin,
+    .onedark,
+    .synthwave,
+    .red,
+    .sunset,
+    .gray,
+    .clean
+  )
+  ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
-:is(.dark, .retro, .dracula, .nord, .monokai, .tokyonight, .solarized, .gruvbox, .catppuccin, .onedark, .synthwave, .red, .sunset, .gray) ::-webkit-scrollbar-track {
+:is(
+    .dark,
+    .retro,
+    .dracula,
+    .nord,
+    .monokai,
+    .tokyonight,
+    .solarized,
+    .gruvbox,
+    .catppuccin,
+    .onedark,
+    .synthwave,
+    .red,
+    .sunset,
+    .gray,
+    .clean
+  )
+  ::-webkit-scrollbar-track {
   background: var(--muted);
 }
 
@@ -1524,11 +3598,11 @@
 
 /* Retro Scrollbar override */
 .retro ::-webkit-scrollbar-thumb {
-    background: var(--primary);
-    border-radius: 0;
+  background: var(--primary);
+  border-radius: 0;
 }
 .retro ::-webkit-scrollbar-track {
-    background: var(--background);
+  background: var(--background);
 }
 
 /* Red theme scrollbar */
@@ -1599,6 +3673,45 @@
 .gray ::-webkit-scrollbar-track,
 .gray .scrollbar-visible::-webkit-scrollbar-track {
   background: oklch(0.25 0.005 250);
+}
+
+/* Clean theme scrollbar - 5px width, transparent track, subtle thumb */
+.clean ::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+.clean ::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.clean ::-webkit-scrollbar-thumb,
+.clean .scrollbar-visible::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px !important;
+}
+
+.clean ::-webkit-scrollbar-thumb:hover,
+.clean .scrollbar-visible::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.clean .custom-scrollbar::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+.clean .custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.clean .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px !important;
+}
+
+.clean .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Always visible scrollbar for file diffs and code blocks */
@@ -1686,11 +3799,19 @@
 
   /* Brand gradient utilities */
   .gradient-brand {
-    background: linear-gradient(135deg, oklch(0.55 0.25 265), oklch(0.5 0.28 270));
+    background: linear-gradient(
+      135deg,
+      oklch(0.55 0.25 265),
+      oklch(0.5 0.28 270)
+    );
   }
 
   .gradient-brand-subtle {
-    background: linear-gradient(135deg, oklch(0.55 0.25 265 / 0.1), oklch(0.5 0.28 270 / 0.1));
+    background: linear-gradient(
+      135deg,
+      oklch(0.55 0.25 265 / 0.1),
+      oklch(0.5 0.28 270 / 0.1)
+    );
   }
 
   /* Glass morphism background utilities */
@@ -1705,11 +3826,11 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
-  
+
   .light .bg-glass {
     background: oklch(1 0 0 / 0.8);
   }
-  
+
   .light .bg-glass-80 {
     background: oklch(1 0 0 / 0.95);
   }
@@ -1737,11 +3858,21 @@
   }
 
   .light .content-bg {
-    background: linear-gradient(135deg, oklch(0.99 0 0), oklch(0.98 0 0), oklch(0.99 0 0));
+    background: linear-gradient(
+      135deg,
+      oklch(0.99 0 0),
+      oklch(0.98 0 0),
+      oklch(0.99 0 0)
+    );
   }
 
   .dark .content-bg {
-    background: linear-gradient(135deg, oklch(0.04 0 0), oklch(0.08 0 0), oklch(0.04 0 0));
+    background: linear-gradient(
+      135deg,
+      oklch(0.04 0 0),
+      oklch(0.08 0 0),
+      oklch(0.04 0 0)
+    );
   }
 
   /* Action button utilities */
@@ -1783,12 +3914,18 @@
   }
 
   .bg-running-indicator\/20 {
-    background-color: color-mix(in oklch, var(--running-indicator), transparent 80%);
+    background-color: color-mix(
+      in oklch,
+      var(--running-indicator),
+      transparent 80%
+    );
   }
 
   .shadow-running-indicator\/50 {
-    box-shadow: 0 10px 15px -3px color-mix(in oklch, var(--running-indicator), transparent 50%),
-                0 4px 6px -4px color-mix(in oklch, var(--running-indicator), transparent 50%);
+    box-shadow: 0 10px 15px -3px color-mix(in oklch, var(--running-indicator), transparent
+            50%),
+      0 4px 6px -4px color-mix(in oklch, var(--running-indicator), transparent
+            50%);
   }
 
   .text-running-indicator {
@@ -1835,429 +3972,564 @@
 .retro .glass-strong,
 .retro .bg-glass,
 .retro .bg-glass-80 {
-    backdrop-filter: none;
-    background: var(--background);
-    border: 1px solid var(--border);
+  backdrop-filter: none;
+  background: var(--background);
+  border: 1px solid var(--border);
 }
 
 .retro .gradient-brand {
-    background: var(--primary);
-    color: var(--primary-foreground);
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .retro .content-bg {
-    background: 
-        linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px),
-        var(--background);
-    background-size: 20px 20px;
+  background: linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+    var(--background);
+  background-size: 20px 20px;
 }
 
 .retro * {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 /* Animated Outline Button Styles */
 .animated-outline-gradient {
-    /* Default gradient - purple to blue */
-    background: conic-gradient(from 90deg at 50% 50%, #a855f7 0%, #3b82f6 50%, #a855f7 100%);
+  /* Default gradient - purple to blue */
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #a855f7 0%,
+    #3b82f6 50%,
+    #a855f7 100%
+  );
 }
 
 /* Light mode - deeper purple to blue gradient for better visibility */
 .light .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #7c3aed 0%, #2563eb 50%, #7c3aed 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #7c3aed 0%,
+    #2563eb 50%,
+    #7c3aed 100%
+  );
 }
 
 .light .animated-outline-inner {
-    background: oklch(100% 0 0) !important;
-    color: #7c3aed !important;
-    border: 1px solid oklch(92% 0 0);
+  background: oklch(100% 0 0) !important;
+  color: #7c3aed !important;
+  border: 1px solid oklch(92% 0 0);
 }
 
-.light [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(97% 0.02 270) !important;
-    color: #5b21b6 !important;
+.light
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(97% 0.02 270) !important;
+  color: #5b21b6 !important;
 }
 
 /* Dark mode - purple to blue gradient */
 .dark .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #a855f7 0%, #3b82f6 50%, #a855f7 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #a855f7 0%,
+    #3b82f6 50%,
+    #a855f7 100%
+  );
 }
 
 .dark .animated-outline-inner {
-    background: oklch(0.15 0 0) !important;
-    color: #c084fc !important;
+  background: oklch(0.15 0 0) !important;
+  color: #c084fc !important;
 }
 
-.dark [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.2 0.02 270) !important;
-    color: #e9d5ff !important;
+.dark
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.2 0.02 270) !important;
+  color: #e9d5ff !important;
 }
 
 /* Retro mode - unique scanline + neon effect */
 .retro .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #00ff41 0%, #00ffff 25%, #ff00ff 50%, #00ffff 75%, #00ff41 100%);
-    animation: spin 2s linear infinite, retro-glow 1s ease-in-out infinite alternate;
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #00ff41 0%,
+    #00ffff 25%,
+    #ff00ff 50%,
+    #00ffff 75%,
+    #00ff41 100%
+  );
+  animation: spin 2s linear infinite,
+    retro-glow 1s ease-in-out infinite alternate;
 }
 
 @keyframes retro-glow {
-    from {
-        filter: brightness(1) drop-shadow(0 0 2px #00ff41);
-    }
-    to {
-        filter: brightness(1.2) drop-shadow(0 0 8px #00ff41);
-    }
+  from {
+    filter: brightness(1) drop-shadow(0 0 2px #00ff41);
+  }
+  to {
+    filter: brightness(1.2) drop-shadow(0 0 8px #00ff41);
+  }
 }
 
 .retro [data-slot="button"][class*="animated-outline"] {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 .retro .animated-outline-inner {
-    background: oklch(0 0 0) !important;
-    color: #00ff41 !important;
-    border-radius: 0 !important;
-    text-shadow: 0 0 5px #00ff41;
-    font-family: var(--font-geist-mono), monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  background: oklch(0 0 0) !important;
+  color: #00ff41 !important;
+  border-radius: 0 !important;
+  text-shadow: 0 0 5px #00ff41;
+  font-family: var(--font-geist-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-.retro [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.1 0.1 145) !important;
-    color: #00ff41 !important;
-    box-shadow: 
-        0 0 10px #00ff41,
-        0 0 20px #00ff41,
-        inset 0 0 10px rgba(0, 255, 65, 0.1);
-    text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+.retro
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.1 0.1 145) !important;
+  color: #00ff41 !important;
+  box-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41,
+    inset 0 0 10px rgba(0, 255, 65, 0.1);
+  text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
 }
 
 /* Dracula animated-outline - purple/pink */
 .dracula .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #bd93f9 0%, #ff79c6 50%, #bd93f9 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #bd93f9 0%,
+    #ff79c6 50%,
+    #bd93f9 100%
+  );
 }
 
 .dracula .animated-outline-inner {
-    background: oklch(0.18 0.02 280) !important;
-    color: #bd93f9 !important;
+  background: oklch(0.18 0.02 280) !important;
+  color: #bd93f9 !important;
 }
 
-.dracula [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.24 0.03 280) !important;
-    color: #ff79c6 !important;
+.dracula
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.24 0.03 280) !important;
+  color: #ff79c6 !important;
 }
 
 /* Nord animated-outline - frost blue */
 .nord .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #88c0d0 0%, #81a1c1 50%, #88c0d0 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #88c0d0 0%,
+    #81a1c1 50%,
+    #88c0d0 100%
+  );
 }
 
 .nord .animated-outline-inner {
-    background: oklch(0.23 0.02 240) !important;
-    color: #88c0d0 !important;
+  background: oklch(0.23 0.02 240) !important;
+  color: #88c0d0 !important;
 }
 
-.nord [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.28 0.03 240) !important;
-    color: #8fbcbb !important;
+.nord
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.28 0.03 240) !important;
+  color: #8fbcbb !important;
 }
 
 /* Monokai animated-outline - pink/yellow */
 .monokai .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #f92672 0%, #e6db74 50%, #f92672 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #f92672 0%,
+    #e6db74 50%,
+    #f92672 100%
+  );
 }
 
 .monokai .animated-outline-inner {
-    background: oklch(0.17 0.01 90) !important;
-    color: #f92672 !important;
+  background: oklch(0.17 0.01 90) !important;
+  color: #f92672 !important;
 }
 
-.monokai [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.22 0.02 90) !important;
-    color: #e6db74 !important;
+.monokai
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.22 0.02 90) !important;
+  color: #e6db74 !important;
 }
 
 /* Tokyo Night animated-outline - blue/magenta */
 .tokyonight .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #7aa2f7 0%, #bb9af7 50%, #7aa2f7 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #7aa2f7 0%,
+    #bb9af7 50%,
+    #7aa2f7 100%
+  );
 }
 
 .tokyonight .animated-outline-inner {
-    background: oklch(0.16 0.03 260) !important;
-    color: #7aa2f7 !important;
+  background: oklch(0.16 0.03 260) !important;
+  color: #7aa2f7 !important;
 }
 
-.tokyonight [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.22 0.04 260) !important;
-    color: #bb9af7 !important;
+.tokyonight
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.22 0.04 260) !important;
+  color: #bb9af7 !important;
 }
 
 /* Solarized animated-outline - blue/cyan */
 .solarized .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #268bd2 0%, #2aa198 50%, #268bd2 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #268bd2 0%,
+    #2aa198 50%,
+    #268bd2 100%
+  );
 }
 
 .solarized .animated-outline-inner {
-    background: oklch(0.2 0.02 230) !important;
-    color: #268bd2 !important;
+  background: oklch(0.2 0.02 230) !important;
+  color: #268bd2 !important;
 }
 
-.solarized [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.25 0.03 230) !important;
-    color: #2aa198 !important;
+.solarized
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.25 0.03 230) !important;
+  color: #2aa198 !important;
 }
 
 /* Gruvbox animated-outline - yellow/orange */
 .gruvbox .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #fabd2f 0%, #fe8019 50%, #fabd2f 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #fabd2f 0%,
+    #fe8019 50%,
+    #fabd2f 100%
+  );
 }
 
 .gruvbox .animated-outline-inner {
-    background: oklch(0.18 0.02 60) !important;
-    color: #fabd2f !important;
+  background: oklch(0.18 0.02 60) !important;
+  color: #fabd2f !important;
 }
 
-.gruvbox [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.24 0.03 60) !important;
-    color: #fe8019 !important;
+.gruvbox
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.24 0.03 60) !important;
+  color: #fe8019 !important;
 }
 
 /* Catppuccin animated-outline - mauve/pink */
 .catppuccin .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #cba6f7 0%, #f5c2e7 50%, #cba6f7 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #cba6f7 0%,
+    #f5c2e7 50%,
+    #cba6f7 100%
+  );
 }
 
 .catppuccin .animated-outline-inner {
-    background: oklch(0.18 0.02 260) !important;
-    color: #cba6f7 !important;
+  background: oklch(0.18 0.02 260) !important;
+  color: #cba6f7 !important;
 }
 
-.catppuccin [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.24 0.03 260) !important;
-    color: #f5c2e7 !important;
+.catppuccin
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.24 0.03 260) !important;
+  color: #f5c2e7 !important;
 }
 
 /* One Dark animated-outline - blue/magenta */
 .onedark .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #61afef 0%, #c678dd 50%, #61afef 100%);
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #61afef 0%,
+    #c678dd 50%,
+    #61afef 100%
+  );
 }
 
 .onedark .animated-outline-inner {
-    background: oklch(0.19 0.01 250) !important;
-    color: #61afef !important;
+  background: oklch(0.19 0.01 250) !important;
+  color: #61afef !important;
 }
 
-.onedark [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.25 0.02 250) !important;
-    color: #c678dd !important;
+.onedark
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.25 0.02 250) !important;
+  color: #c678dd !important;
 }
 
 /* Synthwave animated-outline - hot pink/cyan with glow */
 .synthwave .animated-outline-gradient {
-    background: conic-gradient(from 90deg at 50% 50%, #f97e72 0%, #72f1b8 25%, #ff7edb 50%, #72f1b8 75%, #f97e72 100%);
-    animation: spin 2s linear infinite, synthwave-glow 1.5s ease-in-out infinite alternate;
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #f97e72 0%,
+    #72f1b8 25%,
+    #ff7edb 50%,
+    #72f1b8 75%,
+    #f97e72 100%
+  );
+  animation: spin 2s linear infinite,
+    synthwave-glow 1.5s ease-in-out infinite alternate;
 }
 
 @keyframes synthwave-glow {
-    from {
-        filter: brightness(1) drop-shadow(0 0 3px #f97e72);
-    }
-    to {
-        filter: brightness(1.3) drop-shadow(0 0 10px #ff7edb);
-    }
+  from {
+    filter: brightness(1) drop-shadow(0 0 3px #f97e72);
+  }
+  to {
+    filter: brightness(1.3) drop-shadow(0 0 10px #ff7edb);
+  }
 }
 
 .synthwave .animated-outline-inner {
-    background: oklch(0.15 0.05 290) !important;
-    color: #f97e72 !important;
-    text-shadow: 0 0 8px #f97e72;
+  background: oklch(0.15 0.05 290) !important;
+  color: #f97e72 !important;
+  text-shadow: 0 0 8px #f97e72;
 }
 
-.synthwave [data-slot="button"][class*="animated-outline"]:hover .animated-outline-inner {
-    background: oklch(0.22 0.07 290) !important;
-    color: #72f1b8 !important;
-    text-shadow: 0 0 12px #72f1b8;
-    box-shadow: 0 0 15px rgba(114, 241, 184, 0.3);
+.synthwave
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.22 0.07 290) !important;
+  color: #72f1b8 !important;
+  text-shadow: 0 0 12px #72f1b8;
+  box-shadow: 0 0 15px rgba(114, 241, 184, 0.3);
+}
+
+/* Clean animated-outline - Cyan/green gradient with glow */
+.clean .animated-outline-gradient {
+  background: conic-gradient(
+    from 90deg at 50% 50%,
+    #22d3ee 0%,
+    #10b981 25%,
+    #22d3ee 50%,
+    #10b981 75%,
+    #22d3ee 100%
+  );
+  animation: spin 2.5s linear infinite;
+  filter: drop-shadow(0 0 3px rgba(34, 211, 238, 0.4));
+}
+
+.clean .animated-outline-inner {
+  background: oklch(0.12 0.02 250) !important;
+  color: #22d3ee !important;
+}
+
+.clean
+  [data-slot="button"][class*="animated-outline"]:hover
+  .animated-outline-inner {
+  background: oklch(0.18 0.03 250) !important;
+  color: #67e8f9 !important;
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.3);
 }
 
 /* Slider Theme Styles */
 .light .slider-track {
-    background: oklch(90% 0 0);
+  background: oklch(90% 0 0);
 }
 
 .light .slider-range {
-    background: linear-gradient(to right, #7c3aed, #2563eb);
+  background: linear-gradient(to right, #7c3aed, #2563eb);
 }
 
 .light .slider-thumb {
-    background: oklch(100% 0 0);
-    border-color: oklch(80% 0 0);
+  background: oklch(100% 0 0);
+  border-color: oklch(80% 0 0);
 }
 
 .dark .slider-track {
-    background: oklch(0.2 0 0);
+  background: oklch(0.2 0 0);
 }
 
 .dark .slider-range {
-    background: linear-gradient(to right, #a855f7, #3b82f6);
+  background: linear-gradient(to right, #a855f7, #3b82f6);
 }
 
 .dark .slider-thumb {
-    background: oklch(0.25 0 0);
-    border-color: oklch(0.4 0 0);
+  background: oklch(0.25 0 0);
+  border-color: oklch(0.4 0 0);
 }
 
 .retro .slider-track {
-    background: oklch(0.15 0.05 145);
-    border: 1px solid #00ff41;
-    border-radius: 0 !important;
+  background: oklch(0.15 0.05 145);
+  border: 1px solid #00ff41;
+  border-radius: 0 !important;
 }
 
 .retro .slider-range {
-    background: #00ff41;
-    box-shadow: 0 0 10px #00ff41, 0 0 5px #00ff41;
-    border-radius: 0 !important;
+  background: #00ff41;
+  box-shadow: 0 0 10px #00ff41, 0 0 5px #00ff41;
+  border-radius: 0 !important;
 }
 
 .retro .slider-thumb {
-    background: oklch(0 0 0);
-    border: 2px solid #00ff41;
-    border-radius: 0 !important;
-    box-shadow: 0 0 8px #00ff41;
+  background: oklch(0 0 0);
+  border: 2px solid #00ff41;
+  border-radius: 0 !important;
+  box-shadow: 0 0 8px #00ff41;
 }
 
 .retro .slider-thumb:hover {
-    background: oklch(0.1 0.1 145);
-    box-shadow: 0 0 12px #00ff41, 0 0 20px #00ff41;
+  background: oklch(0.1 0.1 145);
+  box-shadow: 0 0 12px #00ff41, 0 0 20px #00ff41;
 }
 
 /* Dracula slider */
 .dracula .slider-track {
-    background: oklch(0.28 0.03 280);
+  background: oklch(0.28 0.03 280);
 }
 
 .dracula .slider-range {
-    background: linear-gradient(to right, #bd93f9, #ff79c6);
+  background: linear-gradient(to right, #bd93f9, #ff79c6);
 }
 
 .dracula .slider-thumb {
-    background: oklch(0.22 0.02 280);
-    border-color: #bd93f9;
+  background: oklch(0.22 0.02 280);
+  border-color: #bd93f9;
 }
 
 /* Nord slider */
 .nord .slider-track {
-    background: oklch(0.31 0.02 240);
+  background: oklch(0.31 0.02 240);
 }
 
 .nord .slider-range {
-    background: linear-gradient(to right, #88c0d0, #81a1c1);
+  background: linear-gradient(to right, #88c0d0, #81a1c1);
 }
 
 .nord .slider-thumb {
-    background: oklch(0.27 0.02 240);
-    border-color: #88c0d0;
+  background: oklch(0.27 0.02 240);
+  border-color: #88c0d0;
 }
 
 /* Monokai slider */
 .monokai .slider-track {
-    background: oklch(0.25 0.02 90);
+  background: oklch(0.25 0.02 90);
 }
 
 .monokai .slider-range {
-    background: linear-gradient(to right, #f92672, #fd971f);
+  background: linear-gradient(to right, #f92672, #fd971f);
 }
 
 .monokai .slider-thumb {
-    background: oklch(0.22 0.01 90);
-    border-color: #f92672;
+  background: oklch(0.22 0.01 90);
+  border-color: #f92672;
 }
 
 /* Tokyo Night slider */
 .tokyonight .slider-track {
-    background: oklch(0.24 0.03 260);
+  background: oklch(0.24 0.03 260);
 }
 
 .tokyonight .slider-range {
-    background: linear-gradient(to right, #7aa2f7, #bb9af7);
+  background: linear-gradient(to right, #7aa2f7, #bb9af7);
 }
 
 .tokyonight .slider-thumb {
-    background: oklch(0.2 0.03 260);
-    border-color: #7aa2f7;
+  background: oklch(0.2 0.03 260);
+  border-color: #7aa2f7;
 }
 
 /* Solarized slider */
 .solarized .slider-track {
-    background: oklch(0.25 0.02 230);
+  background: oklch(0.25 0.02 230);
 }
 
 .solarized .slider-range {
-    background: linear-gradient(to right, #268bd2, #2aa198);
+  background: linear-gradient(to right, #268bd2, #2aa198);
 }
 
 .solarized .slider-thumb {
-    background: oklch(0.23 0.02 230);
-    border-color: #268bd2;
+  background: oklch(0.23 0.02 230);
+  border-color: #268bd2;
 }
 
 /* Gruvbox slider */
 .gruvbox .slider-track {
-    background: oklch(0.26 0.02 60);
+  background: oklch(0.26 0.02 60);
 }
 
 .gruvbox .slider-range {
-    background: linear-gradient(to right, #fabd2f, #fe8019);
+  background: linear-gradient(to right, #fabd2f, #fe8019);
 }
 
 .gruvbox .slider-thumb {
-    background: oklch(0.22 0.02 60);
-    border-color: #fabd2f;
+  background: oklch(0.22 0.02 60);
+  border-color: #fabd2f;
 }
 
 /* Catppuccin slider */
 .catppuccin .slider-track {
-    background: oklch(0.26 0.02 260);
+  background: oklch(0.26 0.02 260);
 }
 
 .catppuccin .slider-range {
-    background: linear-gradient(to right, #cba6f7, #89b4fa);
+  background: linear-gradient(to right, #cba6f7, #89b4fa);
 }
 
 .catppuccin .slider-thumb {
-    background: oklch(0.22 0.02 260);
-    border-color: #cba6f7;
+  background: oklch(0.22 0.02 260);
+  border-color: #cba6f7;
 }
 
 /* One Dark slider */
 .onedark .slider-track {
-    background: oklch(0.25 0.01 250);
+  background: oklch(0.25 0.01 250);
 }
 
 .onedark .slider-range {
-    background: linear-gradient(to right, #61afef, #c678dd);
+  background: linear-gradient(to right, #61afef, #c678dd);
 }
 
 .onedark .slider-thumb {
-    background: oklch(0.23 0.01 250);
-    border-color: #61afef;
+  background: oklch(0.23 0.01 250);
+  border-color: #61afef;
 }
 
 /* Synthwave slider */
 .synthwave .slider-track {
-    background: oklch(0.25 0.07 290);
+  background: oklch(0.25 0.07 290);
 }
 
 .synthwave .slider-range {
-    background: linear-gradient(to right, #f97e72, #ff7edb);
-    box-shadow: 0 0 10px #f97e72, 0 0 5px #ff7edb;
+  background: linear-gradient(to right, #f97e72, #ff7edb);
+  box-shadow: 0 0 10px #f97e72, 0 0 5px #ff7edb;
 }
 
 .synthwave .slider-thumb {
-    background: oklch(0.2 0.06 290);
-    border-color: #f97e72;
-    box-shadow: 0 0 8px #f97e72;
+  background: oklch(0.2 0.06 290);
+  border-color: #f97e72;
+  box-shadow: 0 0 8px #f97e72;
+}
+
+/* Clean theme slider - Cyan accent */
+.clean .slider-track {
+  background: oklch(0.18 0.02 250);
+}
+
+.clean .slider-range {
+  background: linear-gradient(to right, #22d3ee, #10b981);
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.4);
+}
+
+.clean .slider-thumb {
+  background: oklch(0.15 0.02 250);
+  border-color: #22d3ee;
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.3);
 }
 
 /* Line clamp utilities for text overflow prevention */
@@ -2856,4 +5128,62 @@
 
 .animate-accordion-up {
   animation: accordion-up 0.2s ease-out forwards;
+}
+
+/* ================================================
+   CLEAN THEME FONTS - FINAL OVERRIDE (Must be at end of file)
+   These rules MUST come last to override everything
+   ================================================ */
+
+/* Force Inter font on ALL elements - maximum specificity */
+html.clean *,
+html.clean *::before,
+html.clean *::after,
+.clean *,
+.clean *::before,
+.clean *::after {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif !important;
+}
+
+/* Force JetBrains Mono on mono elements */
+html.clean code,
+html.clean code *,
+html.clean pre,
+html.clean pre *,
+html.clean .mono,
+html.clean .mono *,
+html.clean .font-mono,
+html.clean .font-mono *,
+html.clean .tabular-nums,
+html.clean [class*="Mono"],
+.clean code,
+.clean code *,
+.clean pre,
+.clean pre *,
+.clean .mono,
+.clean .mono *,
+.clean .font-mono,
+.clean .font-mono *,
+.clean .tabular-nums,
+.clean [class*="Mono"] {
+  font-family: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace,
+    SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace !important;
+}
+
+/* Target CardTitle specifically */
+html.clean [data-slot="card-title"],
+.clean [data-slot="card-title"] {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Target all data-slot elements */
+html.clean [data-slot],
+html.clean [data-slot] *,
+.clean [data-slot],
+.clean [data-slot] * {
+  font-family: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif !important;
 }

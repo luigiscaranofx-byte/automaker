@@ -4,6 +4,7 @@ import {
   Cat,
   CloudSun,
   Coffee,
+  Droplets,
   Eclipse,
   Flame,
   Ghost,
@@ -112,5 +113,11 @@ export const themeOptions: ReadonlyArray<ThemeOption> = [
     label: "Gray",
     Icon: Square,
     testId: "gray-mode-button",
+  },
+  {
+    value: "clean",
+    label: "Clean",
+    Icon: Droplets,
+    testId: "clean-mode-button",
   },
 ];

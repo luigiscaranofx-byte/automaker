@@ -2,8 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { ImageIcon, Archive, Minimize2, Square, Maximize2 } from "lucide-react";
+import { ImageIcon, Archive, Minimize2, Square, Maximize2, History, Trash2, Layout } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/store/app-store";
 
 interface BoardControlsProps {
   isMounted: boolean;
@@ -22,7 +23,40 @@ export function BoardControls({
   kanbanCardDetailLevel,
   onDetailLevelChange,
 }: BoardControlsProps) {
+  const { getEffectiveTheme } = useAppStore();
+  const effectiveTheme = getEffectiveTheme();
+  const isCleanTheme = effectiveTheme === "clean";
+
   if (!isMounted) return null;
+
+  if (isCleanTheme) {
+    return (
+      <div className="flex items-center gap-2 ml-6">
+        <button 
+          className="p-2.5 glass rounded-xl text-slate-500 hover:text-white transition" 
+          onClick={onShowCompletedModal}
+        >
+          <History className="w-[18px] h-[18px]" />
+        </button>
+        <button className="p-2.5 glass rounded-xl text-slate-500 hover:text-white transition">
+          <Trash2 className="w-[18px] h-[18px]" />
+        </button>
+        <div className="w-px h-6 bg-white/10 mx-1"></div>
+        <button 
+          className="p-2.5 glass rounded-xl text-slate-500 hover:text-white transition" 
+          onClick={onShowBoardBackground}
+        >
+          <Maximize2 className="w-[18px] h-[18px]" />
+        </button>
+        <button 
+          className="p-2.5 glass rounded-xl text-slate-500 hover:text-white transition" 
+          onClick={() => onDetailLevelChange(kanbanCardDetailLevel === 'minimal' ? 'standard' : kanbanCardDetailLevel === 'standard' ? 'detailed' : 'minimal')}
+        >
+          <Layout className="w-[18px] h-[18px]" />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <TooltipProvider>

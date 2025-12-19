@@ -3,6 +3,7 @@
 import { useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Search, X, Loader2 } from "lucide-react";
+import { useAppStore } from "@/store/app-store";
 
 interface BoardSearchBarProps {
   searchQuery: string;
@@ -20,6 +21,9 @@ export function BoardSearchBar({
   currentProjectPath,
 }: BoardSearchBarProps) {
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const { getEffectiveTheme } = useAppStore();
+  const effectiveTheme = getEffectiveTheme();
+  const isCleanTheme = effectiveTheme === "clean";
 
   // Focus search input when "/" is pressed
   useEffect(() => {
@@ -38,6 +42,25 @@ export function BoardSearchBar({
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
+
+  if (isCleanTheme) {
+    return (
+      <div className="relative flex-1 max-w-2xl group">
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 group-focus-within:text-cyan-400 transition-colors" />
+        <input
+          ref={searchInputRef}
+          type="text"
+          placeholder="Search features by keyword..."
+          value={searchQuery}
+          onChange={(e) => onSearchChange(e.target.value)}
+          className="w-full bg-white/5 border border-white/10 rounded-2xl py-2.5 pl-12 pr-12 text-sm focus:outline-none focus:border-cyan-500/50 transition-all mono"
+        />
+        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+          <span className="shortcut-badge">/</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative max-w-md flex-1 flex items-center gap-2">

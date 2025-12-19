@@ -10,7 +10,7 @@ import {
 } from "@dnd-kit/core";
 import { useAppStore, Feature } from "@/store/app-store";
 import { getElectronAPI } from "@/lib/electron";
-import { pathsEqual } from "@/lib/utils";
+import { pathsEqual, cn } from "@/lib/utils";
 import { BoardBackgroundModal } from "@/components/dialogs/board-background-modal";
 import { RefreshCw } from "lucide-react";
 import { useAutoMode } from "@/hooks/use-auto-mode";
@@ -76,6 +76,7 @@ export function BoardView() {
     setCurrentWorktree,
     getWorktrees,
     setWorktrees,
+    getEffectiveTheme,
   } = useAppStore();
   const shortcuts = useKeyboardShortcutsConfig();
   const {
@@ -521,6 +522,9 @@ export function BoardView() {
     [currentProject, setPendingPlanApproval]
   );
 
+  const effectiveTheme = getEffectiveTheme();
+  const isCleanTheme = effectiveTheme === "clean";
+
   if (!currentProject) {
     return (
       <div
@@ -597,7 +601,7 @@ export function BoardView() {
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Search Bar Row */}
-        <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+        <div className={cn("flex items-center justify-between shrink-0", isCleanTheme ? "px-8 py-4" : "px-4 pt-4 pb-2")}>
           <BoardSearchBar
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}

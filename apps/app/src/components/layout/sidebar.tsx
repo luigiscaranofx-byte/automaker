@@ -1217,6 +1217,8 @@ export function Sidebar() {
     <aside
       className={cn(
         "flex-shrink-0 flex flex-col z-30 relative",
+        // Clean theme sidebar-glass class
+        "sidebar-glass",
         // Glass morphism background with gradient
         "bg-gradient-to-b from-sidebar/95 via-sidebar/85 to-sidebar/90 backdrop-blur-2xl",
         // Premium border with subtle glow
@@ -1854,6 +1856,8 @@ export function Sidebar() {
                           isActive
                             ? [
                                 // Active: Premium gradient with glow
+                                // Clean theme nav-active class
+                                "nav-active",
                                 "bg-gradient-to-r from-brand-500/20 via-brand-500/15 to-brand-600/10",
                                 "text-foreground font-medium",
                                 "border border-brand-500/30",
@@ -1894,6 +1898,8 @@ export function Sidebar() {
                         {item.shortcut && sidebarOpen && (
                           <span
                             className={cn(
+                              // Clean theme shortcut-badge class
+                              "shortcut-badge",
                               "hidden lg:flex items-center justify-center min-w-5 h-5 px-1.5 text-[10px] font-mono rounded-md transition-all duration-200",
                               isActive
                                 ? "bg-brand-500/20 text-brand-400"
@@ -1919,7 +1925,7 @@ export function Sidebar() {
                           >
                             {item.label}
                             {item.shortcut && (
-                              <span className="ml-2 px-1.5 py-0.5 bg-muted rounded text-[10px] font-mono text-muted-foreground">
+                              <span className="shortcut-badge ml-2 px-1.5 py-0.5 bg-muted rounded text-[10px] font-mono text-muted-foreground">
                                 {formatShortcut(item.shortcut, true)}
                               </span>
                             )}
@@ -2053,6 +2059,8 @@ export function Sidebar() {
                 {!sidebarOpen && runningAgentsCount > 0 && (
                   <span
                     className={cn(
+                      // Clean theme running-agents-badge class
+                      "running-agents-badge",
                       "absolute -top-1.5 -right-1.5 flex items-center justify-center",
                       "min-w-4 h-4 px-1 text-[9px] font-bold rounded-full",
                       "bg-brand-500 text-white shadow-sm",
@@ -2076,6 +2084,8 @@ export function Sidebar() {
               {sidebarOpen && runningAgentsCount > 0 && (
                 <span
                   className={cn(
+                    // Clean theme running-agents-badge class
+                    "running-agents-badge",
                     "hidden lg:flex items-center justify-center",
                     "min-w-6 h-6 px-1.5 text-xs font-semibold rounded-full",
                     "bg-brand-500 text-white shadow-sm",

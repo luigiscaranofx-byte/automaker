@@ -58,6 +58,12 @@ import {
   Wand2,
   Archive,
   Lock,
+  Target,
+  Square,
+  Terminal,
+  RefreshCw,
+  Layers,
+  Edit3,
 } from "lucide-react";
 import { CountUpTimer } from "@/components/ui/count-up-timer";
 import { getElectronAPI } from "@/lib/electron";
@@ -149,7 +155,9 @@ export const KanbanCard = memo(function KanbanCard({
   const [agentInfo, setAgentInfo] = useState<AgentTaskInfo | null>(null);
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const [currentTime, setCurrentTime] = useState(() => Date.now());
-  const { kanbanCardDetailLevel, enableDependencyBlocking, features, useWorktrees } = useAppStore();
+  const { kanbanCardDetailLevel, enableDependencyBlocking, features, useWorktrees, getEffectiveTheme } = useAppStore();
+  const effectiveTheme = getEffectiveTheme();
+  const isCleanTheme = effectiveTheme === "clean";
 
   // Calculate blocking dependencies (if feature is in backlog and has incomplete dependencies)
   const blockingDependencies = useMemo(() => {
@@ -160,9 +168,9 @@ export const KanbanCard = memo(function KanbanCard({
   }, [enableDependencyBlocking, feature, features]);
 
   const showSteps =
-    kanbanCardDetailLevel === "standard" ||
-    kanbanCardDetailLevel === "detailed";
-  const showAgentInfo = kanbanCardDetailLevel === "detailed";
+    (kanbanCardDetailLevel === "standard" ||
+    kanbanCardDetailLevel === "detailed") && !isCleanTheme; // Hide steps in clean theme
+  const showAgentInfo = kanbanCardDetailLevel === "detailed" || isCleanTheme; // Always show model info in clean theme
 
   const isJustFinished = useMemo(() => {
     if (
@@ -291,17 +299,261 @@ export const KanbanCard = memo(function KanbanCard({
     ).borderColor = `color-mix(in oklch, var(--border) ${cardBorderOpacity}%, transparent)`;
   }
 
+  // CLEAN THEME IMPLEMENTATION
+  if (isCleanTheme) {
+    return (
+      <>
+        <div
+          ref={setNodeRef}
+          style={style}
+          className={cn(
+            "glass kanban-card flex flex-col gap-4 group relative",
+            // Verified state
+            feature.status === "verified" && "opacity-60 hover:opacity-100 transition-all",
+            // Running card state
+            isCurrentAutoTask && "border-cyan-500/40 bg-cyan-500/[0.08]",
+            // Dragging state
+            isDragging && "scale-105 shadow-xl shadow-black/20 opacity-50 z-50",
+            !isDraggable && "cursor-default"
+          )}
+          onDoubleClick={onEdit}
+          {...attributes}
+          {...(isDraggable ? listeners : {})}
+        >
+          {/* Action Icons - Waiting/Verified (In Flow, First Child) */}
+          {(feature.status === "waiting_approval" || feature.status === "verified") && (
+            <div className={cn(
+              "flex justify-end gap-3.5 transition-opacity",
+              feature.status === "waiting_approval" ? "opacity-30 group-hover:opacity-100" : "opacity-20"
+            )}>
+              <Edit3 
+                className="w-4 h-4 cursor-pointer hover:text-white transition" 
+                onClick={(e) => { e.stopPropagation(); onEdit(); }} 
+              />
+              <Trash2 
+                className="w-4 h-4 cursor-pointer hover:text-rose-400 transition" 
+                onClick={(e) => { e.stopPropagation(); handleDeleteClick(e); }} 
+              />
+            </div>
+          )}
+
+          {/* Top Bar - Running State */}
+          {isCurrentAutoTask && (
+            <div className="flex justify-end items-center gap-2">
+              <div className="bg-orange-500/15 text-orange-400 text-[9px] px-2.5 py-1 rounded-lg border border-orange-500/20 flex items-center gap-1.5 font-black mono">
+                <RefreshCw className="w-3 h-3" /> {formatModelName(feature.model ?? DEFAULT_MODEL)}
+              </div>
+              <div className="bg-slate-900/50 text-slate-500 text-[9px] px-2 py-1 rounded-lg border border-white/5 font-mono">
+                {feature.startedAt ? (
+                  <CountUpTimer
+                    startedAt={feature.startedAt}
+                    className="text-inherit"
+                  />
+                ) : "00:00"}
+              </div>
+            </div>
+          )}
+          
+          {/* Top Bar - In Progress (Inactive) State */}
+          {!isCurrentAutoTask && feature.status === "in_progress" && (
+             <div className="flex justify-end gap-2">
+                 <div className="bg-orange-500/10 text-orange-400 text-[9px] px-2.5 py-1 rounded-lg border border-orange-500/10 flex items-center gap-1.5 font-bold mono">
+                    <RefreshCw className="w-3 h-3" /> {formatModelName(feature.model ?? DEFAULT_MODEL)}
+                 </div>
+                 {/* Duration if available - mocked for now as not in Feature type */}
+                 <div className="bg-slate-900/50 text-slate-500 text-[9px] px-2 py-1 rounded-lg border border-white/5 font-mono">
+                     00:07
+                 </div>
+             </div>
+          )}
+
+          {/* Delete Icon - Top Right for Backlog (Absolute) */}
+          {feature.status === "backlog" && (
+            <div className="absolute top-5 right-6 opacity-0 group-hover:opacity-100 transition-opacity">
+              <Trash2 
+                className="w-4 h-4 text-slate-600 hover:text-red-400 cursor-pointer" 
+                onClick={handleDeleteClick}
+              />
+            </div>
+          )}
+
+          {/* Description */}
+          <p className={cn(
+            "text-[13px] leading-relaxed font-medium line-clamp-3",
+            isCurrentAutoTask ? "text-white font-semibold" : "text-slate-300",
+            feature.status === "waiting_approval" && "italic",
+            feature.status === "verified" && "line-through decoration-slate-600"
+          )}>
+            {feature.description || feature.summary || "No description"}
+          </p>
+          
+          {/* More link */}
+          {(feature.description || "").length > 100 && (
+             <div className="flex items-center gap-1 text-[10px] text-slate-500 -mt-1 cursor-pointer hover:text-slate-300">
+                <ChevronDown className="w-3 h-3" /> More
+             </div>
+          )}
+
+          {/* Backlog Info */}
+          {feature.status === "backlog" && (
+            <div className="text-[10px] font-bold text-cyan-400/80 mono flex items-center gap-1.5 uppercase tracking-tight">
+              <Layers className="w-3.5 h-3.5" /> {feature.category || "General"}
+            </div>
+          )}
+
+          {/* Buttons */}
+          <div className="flex gap-2 mt-auto">
+            {/* Backlog Buttons */}
+            {feature.status === "backlog" && (
+              <>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); onEdit(); }} 
+                  className="flex-1 glass py-2.5 rounded-xl text-[11px] font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition"
+                >
+                  <Edit3 className="w-3.5 h-3.5" /> Edit
+                </button>
+                {onImplement && (
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onImplement(); }} 
+                    className="flex-1 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/20 py-2.5 rounded-xl text-[11px] font-bold flex items-center justify-center gap-2 transition"
+                  >
+                    <Target className="w-3.5 h-3.5" /> Make
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* In Progress Buttons */}
+            {feature.status === "in_progress" && (
+              <>
+                {onViewOutput && (
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onViewOutput(); }} 
+                    className={cn(
+                      "flex-[4] py-3 rounded-xl text-[11px] font-bold flex items-center justify-center gap-2",
+                      isCurrentAutoTask ? "btn-cyan font-black tracking-widest" : "bg-cyan-500/15 text-cyan-400 border border-cyan-500/20"
+                    )}
+                  >
+                    <Terminal className={cn("w-4 h-4", isCurrentAutoTask && "stroke-[2.5px]")} /> LOGS
+                    {agentInfo?.toolCallCount ? (
+                       <span className={cn("px-1.5 rounded ml-1", isCurrentAutoTask ? "bg-black/10" : "bg-cyan-500/10")}>{agentInfo.toolCallCount}</span>
+                    ) : null}
+                  </button>
+                )}
+                {onForceStop && (
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onForceStop(); }} 
+                    className={cn(
+                      "flex-1 rounded-xl flex items-center justify-center transition",
+                      isCurrentAutoTask ? "bg-rose-500 hover:bg-rose-600 text-white shadow-lg shadow-rose-500/20" : "bg-rose-500/20 text-rose-500/50 border border-rose-500/20"
+                    )}
+                  >
+                    <Square className="w-4 h-4 fill-current" />
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* Waiting Buttons */}
+            {feature.status === "waiting_approval" && (
+              <>
+                {onFollowUp && (
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onFollowUp(); }} 
+                    className="flex-1 glass border-white/10 py-3 rounded-xl text-[11px] font-bold flex items-center justify-center gap-2 hover:bg-white/10 transition"
+                  >
+                    <Wand2 className="w-4 h-4" /> Refine
+                  </button>
+                )}
+                {onCommit && (
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onCommit(); }} 
+                    className="flex-1 btn-cyan py-3 rounded-xl text-[11px] font-black flex items-center justify-center gap-2 tracking-widest"
+                  >
+                    <GitCommit className="w-4 h-4 stroke-[2.5px]" /> COMMIT
+                  </button>
+                )}
+              </>
+            )}
+
+            {/* Verified Buttons */}
+            {feature.status === "verified" && (
+              <>
+                 {onViewOutput && (
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); onViewOutput(); }} 
+                      className="px-7 glass border-white/10 py-3 rounded-xl text-[11px] font-bold text-slate-500 hover:text-slate-300 transition"
+                    >
+                      Logs
+                    </button>
+                 )}
+                 {onComplete && (
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); onComplete(); }} 
+                      className="flex-1 bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 py-3 rounded-xl text-[11px] font-black flex items-center justify-center gap-2 tracking-widest"
+                    >
+                      <CheckCircle2 className="w-4 h-4 stroke-[2.5px]" /> COMPLETE
+                    </button>
+                 )}
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Delete Confirmation Dialog */}
+        <DeleteConfirmDialog
+          open={isDeleteDialogOpen}
+          onOpenChange={setIsDeleteDialogOpen}
+          onConfirm={handleConfirmDelete}
+          title="Delete Feature"
+          description="Are you sure you want to delete this feature? This action cannot be undone."
+          testId="delete-confirmation-dialog"
+          confirmTestId="confirm-delete-button"
+        />
+
+        {/* Summary Modal - Reusing existing logic */}
+        <Dialog open={isSummaryDialogOpen} onOpenChange={setIsSummaryDialogOpen}>
+          <DialogContent
+            className="max-w-4xl max-h-[80vh] overflow-hidden flex flex-col"
+            data-testid={`summary-dialog-${feature.id}`}
+          >
+            {/* ... Existing dialog content ... */}
+            <DialogHeader>
+                <DialogTitle>Summary</DialogTitle>
+                <DialogDescription>{feature.summary}</DialogDescription>
+            </DialogHeader>
+             <div className="flex-1 overflow-y-auto p-4 bg-card rounded-lg border border-border/50">
+                <Markdown>
+                  {feature.summary ||
+                    summary ||
+                    agentInfo?.summary ||
+                    "No summary available"}
+                </Markdown>
+              </div>
+            <DialogFooter>
+              <Button onClick={() => setIsSummaryDialogOpen(false)}>Close</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </>
+    );
+  }
+
   const cardElement = (
     <Card
       ref={setNodeRef}
       style={isCurrentAutoTask ? style : borderStyle}
       className={cn(
+        // Clean theme kanban-card class
+        "kanban-card",
         "cursor-grab active:cursor-grabbing relative kanban-card-content select-none",
         "transition-all duration-200 ease-out",
         // Premium shadow system
         "shadow-sm hover:shadow-md hover:shadow-black/10",
         // Subtle lift on hover
         "hover:-translate-y-0.5",
+        // Running card state for clean theme
+        isCurrentAutoTask && "is-running kanban-card-active",
         !isCurrentAutoTask &&
           cardBorderEnabled &&
           cardBorderOpacity === 100 &&
@@ -725,7 +977,10 @@ export const KanbanCard = memo(function KanbanCard({
 
         {/* Model/Preset Info for Backlog Cards */}
         {showAgentInfo && feature.status === "backlog" && (
-          <div className="mb-3 space-y-2 overflow-hidden">
+          <div
+            className="mb-3 space-y-2 overflow-hidden"
+            style={isCleanTheme ? { order: 1 } : undefined}
+          >
             <div className="flex items-center gap-2 text-[11px] flex-wrap">
               <div className="flex items-center gap-1 text-[var(--status-info)]">
                 <Cpu className="w-3 h-3" />
@@ -747,7 +1002,10 @@ export const KanbanCard = memo(function KanbanCard({
 
         {/* Agent Info Panel */}
         {showAgentInfo && feature.status !== "backlog" && agentInfo && (
-          <div className="mb-3 space-y-2 overflow-hidden">
+          <div
+            className="mb-3 space-y-2 overflow-hidden"
+            style={isCleanTheme ? { order: 1 } : undefined}
+          >
             {/* Model & Phase */}
             <div className="flex items-center gap-2 text-[11px] flex-wrap">
               <div className="flex items-center gap-1 text-[var(--status-info)]">
@@ -880,7 +1138,10 @@ export const KanbanCard = memo(function KanbanCard({
         )}
 
         {/* Actions */}
-        <div className="flex flex-wrap gap-1.5">
+        <div
+          className="flex flex-wrap gap-1.5"
+          style={isCleanTheme ? { order: 2 } : undefined}
+        >
           {isCurrentAutoTask && (
             <>
               {/* Approve Plan button - PRIORITY: shows even when agent is "running" (paused for approval) */}

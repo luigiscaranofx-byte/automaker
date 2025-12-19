@@ -431,6 +431,31 @@ const grayTheme: TerminalTheme = {
   brightWhite: "#e0e0e8",
 };
 
+// Clean theme - Modern glassmorphism with cyan accents
+const cleanTheme: TerminalTheme = {
+  background: "#0b101a",
+  foreground: "#e2e8f0",
+  cursor: "#22d3ee",
+  cursorAccent: "#0b101a",
+  selectionBackground: "#22d3ee33",
+  black: "#0f1419",
+  red: "#ef4444",
+  green: "#10b981",
+  yellow: "#f59e0b",
+  blue: "#22d3ee",
+  magenta: "#a78bfa",
+  cyan: "#22d3ee",
+  white: "#e2e8f0",
+  brightBlack: "#4b5563",
+  brightRed: "#f87171",
+  brightGreen: "#34d399",
+  brightYellow: "#fbbf24",
+  brightBlue: "#67e8f9",
+  brightMagenta: "#c4b5fd",
+  brightCyan: "#67e8f9",
+  brightWhite: "#f8fafc",
+};
+
 // Theme mapping
 const terminalThemes: Record<ThemeMode, TerminalTheme> = {
   light: lightTheme,
@@ -450,6 +475,7 @@ const terminalThemes: Record<ThemeMode, TerminalTheme> = {
   cream: creamTheme,
   sunset: sunsetTheme,
   gray: grayTheme,
+  clean: cleanTheme,
 };
 
 /**

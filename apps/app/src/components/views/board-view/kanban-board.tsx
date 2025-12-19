@@ -13,10 +13,11 @@ import { Button } from "@/components/ui/button";
 import { HotkeyButton } from "@/components/ui/hotkey-button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { KanbanColumn, KanbanCard } from "./components";
-import { Feature } from "@/store/app-store";
-import { FastForward, Lightbulb, Trash2 } from "lucide-react";
+import { Feature, useAppStore } from "@/store/app-store";
+import { FastForward, Lightbulb, Trash2, GitBranch } from "lucide-react";
 import { useKeyboardShortcutsConfig } from "@/hooks/use-keyboard-shortcuts";
 import { COLUMNS, ColumnId } from "./constants";
+import { cn } from "@/lib/utils";
 
 interface KanbanBoardProps {
   sensors: any;
@@ -89,9 +90,16 @@ export function KanbanBoard({
   suggestionsCount,
   onDeleteAllVerified,
 }: KanbanBoardProps) {
+  const { getEffectiveTheme } = useAppStore();
+  const effectiveTheme = getEffectiveTheme();
+  const isCleanTheme = effectiveTheme === "clean";
+
   return (
     <div
-      className="flex-1 overflow-x-auto px-4 pb-4 relative"
+      className={cn(
+        "flex-1 overflow-x-auto relative",
+        isCleanTheme ? "custom-scrollbar px-8 pb-8" : "px-4 pb-4"
+      )}
       style={backgroundImageStyle}
     >
       <DndContext
@@ -100,9 +108,91 @@ export function KanbanBoard({
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
       >
-        <div className="flex gap-5 h-full min-w-max py-1">
+        <div 
+          className={cn(
+            "flex h-full min-w-max",
+            isCleanTheme ? "gap-6 items-start" : "gap-5 py-1"
+          )}
+        >
           {COLUMNS.map((column) => {
             const columnFeatures = getColumnFeatures(column.id);
+            
+            // Clean Theme Header Actions
+            let headerAction;
+            if (isCleanTheme) {
+              if (column.id === "backlog") {
+                headerAction = (
+                  <div className="flex items-center gap-1.5 opacity-40">
+                    <Lightbulb className="w-3.5 h-3.5 text-yellow-500" />
+                    <GitBranch className="w-3.5 h-3.5 text-cyan-400" />
+                    <span className="mono text-[9px] text-cyan-400 font-bold">Mabe 6</span>
+                  </div>
+                );
+              } else if (column.id === "verified" && columnFeatures.length > 0) {
+                headerAction = (
+                  <button 
+                    className="ml-2 text-[10px] text-rose-500 flex items-center gap-1 hover:underline font-black transition" 
+                    onClick={onDeleteAllVerified}
+                  >
+                    <Trash2 className="w-3.5 h-3.5" /> Delete All
+                  </button>
+                );
+              }
+            } else {
+              // Standard Theme Header Actions
+              if (column.id === "verified" && columnFeatures.length > 0) {
+                headerAction = (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 px-2 text-xs text-destructive hover:text-destructive hover:bg-destructive/10"
+                    onClick={onDeleteAllVerified}
+                    data-testid="delete-all-verified-button"
+                  >
+                    <Trash2 className="w-3 h-3 mr-1" />
+                    Delete All
+                  </Button>
+                );
+              } else if (column.id === "backlog") {
+                headerAction = (
+                  <div className="flex items-center gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0 text-yellow-500 hover:text-yellow-400 hover:bg-yellow-500/10 relative"
+                      onClick={onShowSuggestions}
+                      title="Feature Suggestions"
+                      data-testid="feature-suggestions-button"
+                    >
+                      <Lightbulb className="w-3.5 h-3.5" />
+                      {suggestionsCount > 0 && (
+                        <span
+                          className="absolute -top-1 -right-1 w-4 h-4 text-[9px] font-mono rounded-full bg-yellow-500 text-black flex items-center justify-center"
+                          data-testid="suggestions-count"
+                        >
+                          {suggestionsCount}
+                        </span>
+                      )}
+                    </Button>
+                    {columnFeatures.length > 0 && (
+                      <HotkeyButton
+                        variant="ghost"
+                        size="sm"
+                        className="h-6 px-2 text-xs text-primary hover:text-primary hover:bg-primary/10"
+                        onClick={onStartNextFeatures}
+                        hotkey={shortcuts.startNext}
+                        hotkeyActive={false}
+                        data-testid="start-next-button"
+                      >
+                        <FastForward className="w-3 h-3 mr-1" />
+                        Make
+                      </HotkeyButton>
+                    )}
+                  </div>
+                );
+              }
+            }
+
             return (
               <KanbanColumn
                 key={column.id}
@@ -113,56 +203,7 @@ export function KanbanBoard({
                 opacity={backgroundSettings.columnOpacity}
                 showBorder={backgroundSettings.columnBorderEnabled}
                 hideScrollbar={backgroundSettings.hideScrollbar}
-                headerAction={
-                  column.id === "verified" &&
-                  columnFeatures.length > 0 ? (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 px-2 text-xs text-destructive hover:text-destructive hover:bg-destructive/10"
-                      onClick={onDeleteAllVerified}
-                      data-testid="delete-all-verified-button"
-                    >
-                      <Trash2 className="w-3 h-3 mr-1" />
-                      Delete All
-                    </Button>
-                  ) : column.id === "backlog" ? (
-                    <div className="flex items-center gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-6 w-6 p-0 text-yellow-500 hover:text-yellow-400 hover:bg-yellow-500/10 relative"
-                        onClick={onShowSuggestions}
-                        title="Feature Suggestions"
-                        data-testid="feature-suggestions-button"
-                      >
-                        <Lightbulb className="w-3.5 h-3.5" />
-                        {suggestionsCount > 0 && (
-                          <span
-                            className="absolute -top-1 -right-1 w-4 h-4 text-[9px] font-mono rounded-full bg-yellow-500 text-black flex items-center justify-center"
-                            data-testid="suggestions-count"
-                          >
-                            {suggestionsCount}
-                          </span>
-                        )}
-                      </Button>
-                      {columnFeatures.length > 0 && (
-                        <HotkeyButton
-                          variant="ghost"
-                          size="sm"
-                          className="h-6 px-2 text-xs text-primary hover:text-primary hover:bg-primary/10"
-                          onClick={onStartNextFeatures}
-                          hotkey={shortcuts.startNext}
-                          hotkeyActive={false}
-                          data-testid="start-next-button"
-                        >
-                          <FastForward className="w-3 h-3 mr-1" />
-                          Make
-                        </HotkeyButton>
-                      )}
-                    </div>
-                  ) : undefined
-                }
+                headerAction={headerAction}
               >
                 <SortableContext
                   items={columnFeatures.map((f) => f.id)}
