@@ -3,6 +3,8 @@ import { Feature, useAppStore } from '@/store/app-store';
 import { GraphCanvas } from './graph-canvas';
 import { useBoardBackground } from '../board-view/hooks';
 import { NodeActionCallbacks } from './hooks';
+import { wouldCreateCircularDependency, dependencyExists } from './utils';
+import { toast } from 'sonner';
 
 interface GraphViewProps {
   features: Feature[];
@@ -17,6 +19,8 @@ interface GraphViewProps {
   onStartTask?: (feature: Feature) => void;
   onStopTask?: (feature: Feature) => void;
   onResumeTask?: (feature: Feature) => void;
+  onUpdateFeature?: (featureId: string, updates: Partial<Feature>) => void;
+  onSpawnTask?: (feature: Feature) => void;
 }
 
 export function GraphView({
@@ -32,6 +36,8 @@ export function GraphView({
   onStartTask,
   onStopTask,
   onResumeTask,
+  onUpdateFeature,
+  onSpawnTask,
 }: GraphViewProps) {
   const { currentProject } = useAppStore();
 
@@ -74,6 +80,49 @@ export function GraphView({
     [features, onEditFeature]
   );
 
+  // Handle creating a dependency via edge connection
+  const handleCreateDependency = useCallback(
+    async (sourceId: string, targetId: string): Promise<boolean> => {
+      // Prevent self-dependency
+      if (sourceId === targetId) {
+        toast.error('A task cannot depend on itself');
+        return false;
+      }
+
+      // Check if dependency already exists
+      if (dependencyExists(features, sourceId, targetId)) {
+        toast.info('Dependency already exists');
+        return false;
+      }
+
+      // Check for circular dependency
+      if (wouldCreateCircularDependency(features, sourceId, targetId)) {
+        toast.error('Cannot create circular dependency', {
+          description: 'This would create a dependency cycle',
+        });
+        return false;
+      }
+
+      // Get target feature and update its dependencies
+      const targetFeature = features.find((f) => f.id === targetId);
+      if (!targetFeature) {
+        toast.error('Target task not found');
+        return false;
+      }
+
+      const currentDeps = targetFeature.dependencies || [];
+
+      // Add the dependency
+      onUpdateFeature?.(targetId, {
+        dependencies: [...currentDeps, sourceId],
+      });
+
+      toast.success('Dependency created');
+      return true;
+    },
+    [features, onUpdateFeature]
+  );
+
   // Node action callbacks for dropdown menu
   const nodeActionCallbacks: NodeActionCallbacks = useMemo(
     () => ({
@@ -107,8 +156,14 @@ export function GraphView({
           onResumeTask?.(feature);
         }
       },
+      onSpawnTask: (featureId: string) => {
+        const feature = features.find((f) => f.id === featureId);
+        if (feature) {
+          onSpawnTask?.(feature);
+        }
+      },
     }),
-    [features, onViewOutput, onEditFeature, onStartTask, onStopTask, onResumeTask]
+    [features, onViewOutput, onEditFeature, onStartTask, onStopTask, onResumeTask, onSpawnTask]
   );
 
   return (
@@ -120,6 +175,7 @@ export function GraphView({
         onSearchQueryChange={onSearchQueryChange}
         onNodeDoubleClick={handleNodeDoubleClick}
         nodeActionCallbacks={nodeActionCallbacks}
+        onCreateDependency={handleCreateDependency}
         backgroundStyle={backgroundImageStyle}
         className="h-full"
       />

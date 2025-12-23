@@ -11,6 +11,7 @@ import {
   SelectionMode,
   ConnectionMode,
   Node,
+  Connection,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
@@ -53,6 +54,7 @@ interface GraphCanvasProps {
   onSearchQueryChange: (query: string) => void;
   onNodeDoubleClick?: (featureId: string) => void;
   nodeActionCallbacks?: NodeActionCallbacks;
+  onCreateDependency?: (sourceId: string, targetId: string) => Promise<boolean>;
   backgroundStyle?: React.CSSProperties;
   className?: string;
 }
@@ -64,6 +66,7 @@ function GraphCanvasInner({
   onSearchQueryChange,
   onNodeDoubleClick,
   nodeActionCallbacks,
+  onCreateDependency,
   backgroundStyle,
   className,
 }: GraphCanvasProps) {
@@ -138,6 +141,19 @@ function GraphCanvasInner({
     [onNodeDoubleClick]
   );
 
+  // Handle edge connection (creating dependencies)
+  const handleConnect = useCallback(
+    async (connection: Connection) => {
+      if (!connection.source || !connection.target) return;
+
+      // In React Flow, dragging from source handle to target handle means:
+      // - source = the node being dragged FROM (the prerequisite/dependency)
+      // - target = the node being dragged TO (the dependent task)
+      await onCreateDependency?.(connection.source, connection.target);
+    },
+    [onCreateDependency]
+  );
+
   // MiniMap node color based on status
   const minimapNodeColor = useCallback((node: Node<TaskNodeData>) => {
     const data = node.data as TaskNodeData | undefined;
@@ -165,6 +181,7 @@ function GraphCanvasInner({
         onNodesChange={isLocked ? undefined : onNodesChange}
         onEdgesChange={onEdgesChange}
         onNodeDoubleClick={handleNodeDoubleClick}
+        onConnect={handleConnect}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         fitView

@@ -14,6 +14,7 @@ import {
   GitBranch,
   Terminal,
   RotateCcw,
+  GitFork,
 } from 'lucide-react';
 import { TaskNodeData } from '../hooks/use-graph-nodes';
 import { Button } from '@/components/ui/button';
@@ -266,6 +267,16 @@ export const TaskNode = memo(function TaskNode({ data, selected }: TaskNodeProps
                     Resume Task
                   </DropdownMenuItem>
                 )}
+                <DropdownMenuItem
+                  className="text-xs cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    data.onSpawnTask?.();
+                  }}
+                >
+                  <GitFork className="w-3 h-3 mr-2" />
+                  Spawn Sub-Task
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

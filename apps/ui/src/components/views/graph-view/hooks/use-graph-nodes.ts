@@ -24,6 +24,7 @@ export interface TaskNodeData extends Feature {
   onStartTask?: () => void;
   onStopTask?: () => void;
   onResumeTask?: () => void;
+  onSpawnTask?: () => void;
 }
 
 export type TaskNode = Node<TaskNodeData, 'task'>;
@@ -40,6 +41,7 @@ export interface NodeActionCallbacks {
   onStartTask?: (featureId: string) => void;
   onStopTask?: (featureId: string) => void;
   onResumeTask?: (featureId: string) => void;
+  onSpawnTask?: (featureId: string) => void;
 }
 
 interface UseGraphNodesProps {
@@ -111,6 +113,9 @@ export function useGraphNodes({
             : undefined,
           onResumeTask: actionCallbacks?.onResumeTask
             ? () => actionCallbacks.onResumeTask!(feature.id)
+            : undefined,
+          onSpawnTask: actionCallbacks?.onSpawnTask
+            ? () => actionCallbacks.onSpawnTask!(feature.id)
             : undefined,
         },
       };
