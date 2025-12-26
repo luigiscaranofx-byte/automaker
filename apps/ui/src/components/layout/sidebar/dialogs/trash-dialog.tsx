@@ -151,16 +151,18 @@ export function TrashDialog({
       </Dialog>
 
       {/* Delete from disk confirmation dialog */}
-      <DeleteConfirmDialog
-        open={deleteFromDiskProject !== null}
-        onOpenChange={(isOpen) => !isOpen && setDeleteFromDiskProject(null)}
-        onConfirm={onConfirmDeleteFromDisk}
-        title={`Delete "${deleteFromDiskProject?.name}" from disk?`}
-        description="This sends the folder to your system Trash."
-        confirmText="Delete from disk"
-        testId="delete-from-disk-confirm-dialog"
-        confirmTestId="confirm-delete-from-disk-button"
-      />
+      {deleteFromDiskProject && (
+        <DeleteConfirmDialog
+          open
+          onOpenChange={(isOpen) => !isOpen && setDeleteFromDiskProject(null)}
+          onConfirm={onConfirmDeleteFromDisk}
+          title={`Delete "${deleteFromDiskProject.name}" from disk?`}
+          description="This sends the folder to your system Trash."
+          confirmText="Delete from disk"
+          testId="delete-from-disk-confirm-dialog"
+          confirmTestId="confirm-delete-from-disk-button"
+        />
+      )}
 
       {/* Empty trash confirmation dialog */}
       <ConfirmDialog
