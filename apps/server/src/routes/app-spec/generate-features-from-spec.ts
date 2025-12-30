@@ -1,11 +1,15 @@
 /**
  * Generate features from existing app_spec.txt
+ *
+ * Model is configurable via phaseModels.featureGenerationModel in settings
+ * (defaults to Sonnet for balanced speed and quality).
  */
 
 import { query } from '@anthropic-ai/claude-agent-sdk';
 import * as secureFs from '../../lib/secure-fs.js';
 import type { EventEmitter } from '../../lib/events.js';
 import { createLogger } from '@automaker/utils';
+import { DEFAULT_PHASE_MODELS } from '@automaker/types';
 import { createFeatureGenerationOptions } from '../../lib/sdk-options.js';
 import { logAuthStatus } from './common.js';
 import { parseAndCreateFeatures } from './parse-and-create-features.js';
@@ -101,10 +105,18 @@ IMPORTANT: Do not ask for clarification. The specification is provided above. Ge
     '[FeatureGeneration]'
   );
 
+  // Get model from phase settings
+  const settings = await settingsService?.getGlobalSettings();
+  const featureGenerationModel =
+    settings?.phaseModels?.featureGenerationModel || DEFAULT_PHASE_MODELS.featureGenerationModel;
+
+  logger.info('Using model:', featureGenerationModel);
+
   const options = createFeatureGenerationOptions({
     cwd: projectPath,
     abortController,
     autoLoadClaudeMd,
+    model: featureGenerationModel,
   });
 
   logger.debug('SDK Options:', JSON.stringify(options, null, 2));
